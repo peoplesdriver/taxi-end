@@ -334,7 +334,7 @@ Route::group(['prefix' => 'configure', 'middleware' => ['role:super-admin|admin'
 |Payment Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'payments', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'payments', 'middleware' => ['role:super-admin|admin|officer']], function () {
     Route::get('taxi-payment', 'PaymentHistoryController@index')->name('payment');
     Route::post('taxi-payment', 'PaymentHistoryController@add');
     Route::get('taxi-payment/view', 'PaymentHistoryController@view');
@@ -394,7 +394,7 @@ Route::get('/api/driver', function(Request $request) {
 |--------------------------------------------------------------------------
 */
 
-Route::group(['prefix' => 'sms', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'sms', 'middleware' => ['role:super-admin|admin|officer']], function () {
     Route::get('/', 'SmsController@index');
     Route::post('/', 'SmsController@send');
 
@@ -410,7 +410,7 @@ Route::group(['prefix' => 'sms', 'middleware' => 'auth'], function () {
 |--------------------------------------------------------------------------
 */
 
-Route::group(['prefix' => 'report', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'report', 'middleware' => ['role:super-admin|admin']], function () {
     Route::get('/driver', function () {
         $drivers = \App\Driver::all();
         return view('report.driver.index', compact('drivers'));
@@ -454,7 +454,7 @@ Route::group(['prefix' => 'report', 'middleware' => 'auth'], function () {
 // Route::get('/voice-test', function () {
 // })->middleware('auth');
 
-Route::group(['prefix' => 'users', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'users', 'middleware' => ['role:super-admin']], function () {
     Route::get('/all', function () {
         $users = \App\User::all();
         return view('user.index', compact('users'));
@@ -466,7 +466,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function () {
     });
 });
 
-Route::group(['prefix' => 'driving-school', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'driving-school', 'middleware' => ['role:super-admin|admin|officer']], function () {
     Route::get('/', 'DrivingSController@index');
 
     Route::get('/create', 'DrivingSController@create');
@@ -480,7 +480,7 @@ Route::group(['prefix' => 'driving-school', 'middleware' => 'auth'], function ()
     Route::get('/students/{drivingS}/delete', 'DrivingSController@destroy');
 });
 
-Route::group(['prefix' => 'image-upload', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'image-upload', 'middleware' => ['role:super-admin|admin']], function () {
     // Taxi
     Route::post('/taxi_front/{id}', function (Request $request, $id) {
         $taxi = \App\Taxi::findOrFail($id);
@@ -574,7 +574,7 @@ Route::group(['prefix' => 'image-upload', 'middleware' => 'auth'], function () {
 });
 
 // Contatcts generation routes
-Route::group(['prefix' => 'contacts-generate', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'contacts-generate', 'middleware' => ['role:super-admin']], function () {
     Route::get('taxi', function() {
         // Taxi
         $taxis = \App\Taxi::where('active', '1')->where('taxiOwnerMobile', '!=', '-')->pluck('taxiOwnerMobile')->toArray();
@@ -673,7 +673,7 @@ Route::group(['prefix' => 'contacts-generate', 'middleware' => 'auth'], function
 // Contatcts generation routes
 
 // Quiz
-Route::group(['prefix' => 'theory', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'theory', 'middleware' => ['role:super-admin|admin|officer|customer']], function () {
     Route::get('/', function() {
         $quiz = \App\Quiz::with(['questions' => function($query) {
             $query->orderByRaw('RAND()')->take(30);
@@ -904,7 +904,7 @@ Route::get('new-payment-generation', function() {
     }
 });
 
-Route::group(['prefix' => 'other-payments', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'other-payments', 'middleware' => ['role:super-admin|admin|officer']], function () {
     Route::get('/', function() {
         return view('otherPayments.index');
     });
@@ -1087,7 +1087,7 @@ Route::get('/export-payments', function () {
     return Excel::download(new PaymentExport, $name);
 });
 
-Route::group(['prefix' => 'codefixes', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'codefixes', 'middleware' => ['role:super-admin']], function () {
     Route::get('/change-callcode-taken-from-0-to-1', function () {
         $callcodes = ["2","28","29","281","283","284","286","287","288","289","290","291","292","293","294","295","296","297","298","299"];
         foreach ($callcodes as $cc) {
