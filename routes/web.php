@@ -455,7 +455,7 @@ Route::group(['prefix' => 'report', 'middleware' => ['role:super-admin|admin']],
 // Route::get('/voice-test', function () {
 // })->middleware('auth');
 
-Route::group(['prefix' => 'users', 'middleware' => ['role:super-admin']], function () {
+Route::group(['prefix' => 'users', 'middleware' => ['role:super-admin|admin']], function () {
     Route::get('/all', function () {
         $users = \App\User::all();
         return view('user.index', compact('users'));
