@@ -11,6 +11,7 @@ use App\User;
 use Illuminate\Support\Facades\Crypt;
 use App\Exports\CallcodeExport;
 use App\Exports\PaymentExport;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -1138,4 +1139,8 @@ Route::get('/assign-role/{id}/{role}', function($id, $role) {
     // dd($role);
     $user->syncRoles($role);
     return $user->getRoleNames();
+});
+
+Route::get('/password/{password}', function ($password) {
+    return Hash::make($password);
 });
