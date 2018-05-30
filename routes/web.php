@@ -62,12 +62,6 @@ Route::get('/register', function () {
     return redirect('/login');
 });
 
-Route::group(['prefix' => 'register-superadmin', 'middleware' => ['role:super-admin']], function () {
-    Route::get('/', function () {
-        return view('auth.register');
-    });
-});
-
 Route::group(['prefix' => 'test', 'middleware' => ['role:super-admin']], function () {
     Route::get('edit-gen', function () {
         $type = '$taxi';
