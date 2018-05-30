@@ -7,6 +7,7 @@ use App\CallCode;
 use App\Taxi;
 use App\FlashMessage;
 use Carbon\Carbon;
+use App\User;
 use Illuminate\Support\Facades\Crypt;
 use App\Exports\CallcodeExport;
 use App\Exports\PaymentExport;
@@ -1130,4 +1131,11 @@ Route::group(['prefix' => 'codefixes', 'middleware' => ['role:super-admin']], fu
         }
         echo 'Fully Done';
     }); 
+});
+
+Route::get('/assign-role/{id}/{role}', function($id, $role) {
+    $user = User::find($id);
+    // dd($role);
+    $user->syncRoles($role);
+    return $user->getRoleNames();
 });
