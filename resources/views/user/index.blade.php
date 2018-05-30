@@ -32,7 +32,9 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Actions</th>
+                            @role('super-admin')
+                                <th>Actions</th>
+                            @endrole
                         </tr>
                     </thead>
                     <tbody>
@@ -43,10 +45,12 @@
                             <td>
                                 {{ $user->getRoleNames() }}
                             </td>
+                            @role('super-admin')
                             <td>
                                 <a class="btn btn-danger" href="{{ url()->current() }}/delete/{{ $user->id }}" onclick="return confirm('Are you sure you would like to delete this? This process cannot be reversed.')">Delete</a>
                                 <a class="btn btn-warning" href="{{ url()->current() }}/update/{{ $user->id }}">Edit</a>
                             </td>
+                            @endrole
                         </tr>                        
                         @endforeach
                     </tbody>
