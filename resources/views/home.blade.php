@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        @role('writer')
+        @role('super-admin|admin')
             <div class="col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
