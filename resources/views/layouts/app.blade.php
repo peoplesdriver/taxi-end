@@ -69,6 +69,7 @@
                         <li class="disabled"><a href="#">Not Logged In</a></li>
                     @else
                         <li><a href="{{ url('/home') }}">Dashboard</a></li>
+                        @role('super-admin|admin|officer')
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Payments <span class="caret"></span>
@@ -78,7 +79,9 @@
                                 <li><a href="https://invoice.taviyani.xyz/">Other Payments</a></li> 
                             </ul>
                         </li>
+                        @endrole
                         <!-- <li><a href="#">Taxi Log</a></li> -->
+                        @role('super-admin|admin|officer')
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Message Center <span class="caret"></span>
@@ -88,6 +91,8 @@
                                 <li><a href="{{ url('sms/group') }}">Group SMS</a></li>
                             </ul>
                         </li>
+                        @endrole
+                        @role('super-admin|admin')
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Report <span class="caret"></span>
@@ -100,6 +105,8 @@
                                 <li><a href="{{ url('report/driving-school') }}">Driving School History Report</a></li>
                             </ul>
                         </li>
+                        @endrole
+                        @role('super-admin|admin')
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Master Data <span class="caret"></span>
@@ -115,6 +122,8 @@
                                 <li><a href="{{ url('test-driver') }}">Drivers with no taxis</a></li>  --}}
                             </ul>
                         </li>
+                        @endrole
+                        @role('super-admin|admin|officer')
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Driving School <span class="caret"></span>
@@ -124,6 +133,8 @@
                                 <li><a href="{{ url('driving-school/create') }}">Register a new user to the Driving School</a></li>
                             </ul>
                         </li>
+                        @endrole
+                        @role('super-admin|admin')
                         <li class="dropdown" disabled>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Manage Users <span class="caret"></span>
@@ -133,6 +144,8 @@
                                 <li disabled><a href="{{ url('users/add') }}">Add New</a></li>
                             </ul>
                         </li>
+                        @endrole
+                        @role('super-admin|admin|officer')
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Displays <span class="caret"></span>
@@ -143,6 +156,8 @@
                                 @endforeach
                             </ul>
                         </li>
+                        @endrole
+                        @role('super-admin|admin|officer|customer')
                         <li class="dropdown" disabled>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Theory <span class="caret"></span>
@@ -152,6 +167,7 @@
                                 <li><a href="{{ url('theory') }}">Theory Test</a></li>
                             </ul>
                         </li>
+                        @endrole
                     @endif
                 </ul>
                 <!-- Right Side Of Navbar -->
