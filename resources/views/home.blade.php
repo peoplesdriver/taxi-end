@@ -13,6 +13,7 @@
                     <p><div id="todaysDate"></div></p>
                     <p>-Taviyani-</p>
                     <hr>
+                    @role('super-admin|admin')
                     <form action="{{ url('/flash-message') }}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -25,6 +26,7 @@
                         </div>
                         <button type="submit" class="btn btn-default btn-success">Save</button>
                     </form>
+                    @endrole
                 </div>
             </div>
         </div>
