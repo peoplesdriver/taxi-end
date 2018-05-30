@@ -3,14 +3,13 @@
 @section('content')
 <ul class="breadcrumb">
     <li><a href="{{ url('home') }}">Home</a></li>
-    <li><a href="#">Configure</a></li>
-    <li><a href="{{ url('configure/driver') }}">Driver</a></li>
-    <li class="active">Add</li>
+    <li><a href="{{ url('user/all') }}">User</a></li>
+    <li class="active">Update</li>
 </ul>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title">Driver</h3>
+        <h3 class="panel-title">Update User</h3>
     </div>
     <div class="panel-body">
         <div class="row">
@@ -26,7 +25,7 @@
                         </div>
                     </div>                       
             <div class="col-md-12">
-                {!! form($form) !!}
+                
             </div> 
         </div>
         

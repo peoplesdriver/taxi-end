@@ -7,9 +7,16 @@ use App\GroupSms;
 use App\GroupSmsStatus;
 use App\Jobs\SendGroupSms;
 use Illuminate\Http\Request;
+use Twilio\Rest\Client;
 
 class GroupSmsController extends Controller
 {
+    public function __construct(Client $client)
+    {
+        $this->middleware('auth');
+        $this->client = $client;
+    }
+
     public function index()
     {
         $contacts = Contact::all();   
@@ -41,9 +48,15 @@ class GroupSmsController extends Controller
 
         // dd($groupSmsStatuses);
 
-        // foreach ($groupSmsStatuses as $groupSmsStatus) {
-        //     SendGroupSms::dispatch($groupSmsStatus);
-        // }
+        foreach ($groupSmsStatuses as $groupSmsStatus) {
+            try {
+                $this->sendMessage($phoneNumber, $message, $from);
+                return redirect('sms')->with('alert-success', 'SMS successfully send');
+    
+            } catch ( \Twilio\Exceptions\RestException  $e ) {
+                return redirect('sms')->with('alert-danger', $e->getMessage());
+            }
+        }
 
         $url = "sms/group/status/".$groupSms->id;
 
@@ -54,5 +67,19 @@ class GroupSmsController extends Controller
     {
         $groupSms = GroupSms::with('numbers')->where('id', $id)->first();
         return view('sms.group.status', compact('groupSms'));
+    }
+
+    private function sendMessage($phoneNumber, $message, $from)
+    {
+        $twilioPhoneNumber = config('services.twilio')['phoneNumber'];
+        $messageParams = array(
+            'from' => $from,
+            'body' => $message
+        );
+
+        $this->client->messages->create(
+            $phoneNumber,
+            $messageParams
+        );
     }
 }

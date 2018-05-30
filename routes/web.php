@@ -61,7 +61,7 @@ Route::get('/register', function () {
     return redirect('/login');
 });
 
-Route::group(['prefix' => 'test', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'test', 'middleware' => 'auth', ['role:super-admin']], function () {
     Route::get('edit-gen', function () {
         $type = '$taxi';
         $fields = ['callcode_id', 'taxiNo', 'taxiChasisNo', 'taxiEngineNo', 'taxiBrand', 'taxiModel', 'taxiColor', 'taxiOwnerName', 'taxiOwnerMobile', 'taxiOwnerEmail', 'taxiOwnerAddress', 'registeredDate', 'anualFeeExpiry', 'roadWorthinessExpiry', 'insuranceExpiry', 'rate', 'taken', 'center_name'];
@@ -233,7 +233,7 @@ Route::get('/test-driving-school', function () {
 |Configure Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['prefix' => 'configure', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'configure', 'middleware' => 'auth', ['role:super-admin|admin']], function () {
 
     /*Company Configure Routes*/
     Route::group(['prefix' => 'company'], function () {
