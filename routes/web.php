@@ -1144,3 +1144,7 @@ Route::get('/assign-role/{id}/{role}', function($id, $role) {
 Route::get('/password/{password}', function ($password) {
     return Hash::make($password);
 });
+
+Route::get('/asshole', function () {
+    return view('asshole');
+})->middleware('auth');
