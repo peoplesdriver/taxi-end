@@ -1148,3 +1148,11 @@ Route::get('/password/{password}', function ($password) {
 Route::get('/asshole', function () {
     return view('asshole');
 })->middleware('auth');
+
+Route::group(['prefix' => 'groups'], function () {
+    Route::get('/', 'ContactController@index');
+    Route::get('/view/{contact}', 'ContactController@show');
+
+    Route::post('/view/{contact}/number', 'ContactController@store');
+    Route::post('/post', 'ContactController@group');
+});

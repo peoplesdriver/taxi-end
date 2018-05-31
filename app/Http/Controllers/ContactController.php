@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\PhoneNumbers;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -14,7 +15,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $groups = Contact::all();
+        return view('sms.group.contact.index', compact('groups'));
     }
 
     /**
@@ -33,9 +35,15 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Contact $contact)
     {
-        //
+        $number = new PhoneNumbers;
+        $number->contact_id = $contact->id;
+        $number->name = $request->name;
+        $number->number = $request->number;
+        $number->save();
+
+        return redirect()->back()->with('alert-sucess', 'Number added successfully');
     }
 
     /**
@@ -46,7 +54,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        //
+        return view('sms.group.contact.number', compact('contact'));
     }
 
     /**
@@ -81,5 +89,13 @@ class ContactController extends Controller
     public function destroy(Contact $contact)
     {
         //
+    }
+
+    public function group(Request $request)
+    {
+        $group = new Contact;
+        $group->group_name = $request->name;
+        $group->save();
+        return redirect()->back();
     }
 }

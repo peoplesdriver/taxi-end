@@ -6,13 +6,12 @@
 
 <ul class="breadcrumb">
     <li><a href="{{ url('home') }}">Home</a></li>
-    <li><a href="#">Contact Group</a></li>
-    <li class="active">Current Group</li>
+    <li><a href="{{ url('groups') }}">Contact Group</a></li>
 </ul>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title">Current group Name</h3>
+        <h3 class="panel-title">Contact Group</h3>
     </div>
     <div class="panel-body">
         <div class="row">     
@@ -28,16 +27,13 @@
                         </div>
                     </div> 
                     <center>
-                    <form class="form-inline" action="/action_page.php">
+                    <form class="form-inline" method="POST" action="{{ url()->current() }}/post">
+                        {{ csrf_field() }}
                         <div class="form-group">
-                          <label class="" for="email">Contact Name:</label>
-                          <input type="name" class="form-control" id="email">
+                            <label class="" for="group-name">Group Name:</label>
+                            <input type="name" name="name" class="form-control" id="group-name">
                         </div>
-                        <div class="form-group">
-                          <label class="" for="pwd">Contact Number:</label>
-                          <input type="name" class="form-control" id="pwd">
-                        </div>
-                        <button type="submit" class="btn btn-default">Add Contact</button>
+                        <button type="submit" class="btn btn-default">Create Group</button>
                     </form>     
                 </center>  
                 <hr>           
@@ -48,22 +44,19 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Contact</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                       
+                       @foreach ($groups as $group)
                         <tr>
-                            <td>A</td>
-                            <td>A</td>
+                            <td>{{ $group->group_name }}</td>
                             <td>
-                                <a style="margin:1px" class="btn btn-danger" href="{{ url()->current() }}/delete/" onclick="return confirm('Are you sure you would like to delete this? This process cannot be reversed.')">Delete</a>
-                                <a style="margin:1px" class="btn btn-warning" href="{{ url()->current() }}/update/">Edit</a>
-                                <a style="margin:1px" class="btn btn-info" href="{{ url()->current() }}/view/">View</a>
+                                <a style="margin:1px" class="btn btn-danger" href="{{ url()->current() }}/delete/{{ $group->id }}" onclick="return confirm('Are you sure you would like to delete this? This process cannot be reversed.')">Delete</a>
+                                <a style="margin:1px" class="btn btn-info" href="{{ url()->current() }}/view/{{ $group->id }}">View</a>
                             </td>
                         </tr>
-                     
+                       @endforeach
                     </tbody>
                 </table>
             </div> 

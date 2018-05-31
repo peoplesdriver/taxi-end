@@ -49,11 +49,15 @@ class GroupSmsController extends Controller
         // dd($groupSmsStatuses);
 
         foreach ($groupSmsStatuses as $groupSmsStatus) {
+            $phoneNumber = "+960".$groupSmsStatus->phone_number;
+            // dd($phoneNumber);
             try {
-                $this->sendMessage($groupSmsStatus->number, $message, $senderId);
+                $this->sendMessage($phoneNumber, $message, $senderId);
                 $groupSmsStatus->status = "Message sent";
+                $groupSmsStatus->save();
             } catch ( \Twilio\Exceptions\RestException  $e ) {
-                $groupSmsStatus->status = $e;
+                $groupSmsStatus->status = $e->getMessage();
+                $groupSmsStatus->save();
             }
         }
 
