@@ -89,6 +89,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="{{ url('sms') }}">Single SMS</a></li>
                                 <li><a href="{{ url('sms/group') }}">Group SMS</a></li>
+                                <li><a href="{{ url('groups') }}">Create Sms Groups/a></li>
                             </ul>
                         </li>
                         @endrole
