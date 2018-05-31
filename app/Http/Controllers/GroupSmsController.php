@@ -50,11 +50,10 @@ class GroupSmsController extends Controller
 
         foreach ($groupSmsStatuses as $groupSmsStatus) {
             try {
-                $this->sendMessage($phoneNumber, $message, $from);
-                return redirect('sms')->with('alert-success', 'SMS successfully send');
-    
+                $this->sendMessage($groupSmsStatus->number, $message, $senderId);
+                $groupSmsStatus->status = "Message sent";
             } catch ( \Twilio\Exceptions\RestException  $e ) {
-                return redirect('sms')->with('alert-danger', $e->getMessage());
+                $groupSmsStatus->status = $e;
             }
         }
 
