@@ -66,7 +66,9 @@
                                         <td class="verticalAlign">{{ $student->created_at->toFormattedDateString() }}</td>
                                         <td class="verticalAlign">{{ $student->user->name }}</td>
                                         <td class="noprint">
+                                            @role('super-admin|admin')
                                             <a style="margin:1px" class="btn btn-danger" href="{{ url()->current() }}/students/{{ $student->id }}/delete">Delete</a>
+                                            @endrole
                                             <a style="margin:1px" class="btn btn-warning" href="{{ url()->current() }}/students/{{ $student->id }}/edit">Edit</a>
                                             <a style="margin:1px" class="btn btn-success" href="{{ url()->current() }}/students/{{ $student->id }}">Reciept</a>
                                         </td>
