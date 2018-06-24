@@ -1162,17 +1162,4 @@ Route::get('/pdf-filler', function () {
     $data = $pdf->getData();
     
     dd($pdf);
-    
-    // $pdf->fillForm([
-    //         'name'=>'athik',
-    //         'nested.name' => 'valX',
-    //     ])
-    //     ->needAppearances()
-    //     ->saveAs('/pdf/filled.pdf');
-    
-    //     if (!$pdf->saveAs('my.pdf')) {
-    //     $error = $pdf->getError();
-    // }
-
-    // return $error;
 })->middleware('auth');
