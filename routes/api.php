@@ -5,6 +5,7 @@ use App\TaxiCenter;
 use App\CallCode;
 use App\Taxi;
 use App\Company;
+use App\news;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,28 @@ Route::group(['prefix' => 'v1'], function () {
             $info->company = $info4;
             //echo json_decode($info);
             return response()->json($info);
+        });
+    });
+
+    Route::group(['prefix' => 'verifications'], function () {
+        Route::get('/', function () {
+            //
+        });
+    });
+
+    Route::group(['prefix' => 'news'], function () {
+        Route::get('/', function () {
+            return news::orderBy('created_at', 'desc')->take('3')->get();
+        });
+
+        Route::post('/add', function (Request $request) {
+            $news = new news;
+            $news->heading = $request->heading;
+            $news->desc = $request->desc;
+            $news->detail = $request->detail;
+            $news->save();
+
+            return $news;
         });
     });
 });           

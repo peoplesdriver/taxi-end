@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Crypt;
 use App\Exports\CallcodeExport;
 use App\Exports\PaymentExport;
 use Illuminate\Support\Facades\Hash;
+use mikehaertl\pdftk\Pdf;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -1145,10 +1147,6 @@ Route::get('/password/{password}', function ($password) {
     return Hash::make($password);
 });
 
-Route::get('/asshole', function () {
-    return view('asshole');
-})->middleware('auth');
-
 Route::group(['prefix' => 'groups'], function () {
     Route::get('/', 'ContactController@index');
     Route::get('/view/{contact}', 'ContactController@show');
@@ -1156,3 +1154,25 @@ Route::group(['prefix' => 'groups'], function () {
     Route::post('/view/{contact}/number', 'ContactController@store');
     Route::post('/post', 'ContactController@group');
 });
+
+Route::get('/pdf-filler', function () {
+    $url = Storage::url('pdf/Transport_LL1_(Fillable-1).pdf');
+    
+    $pdf = new Pdf('http://taviyani.com.mv/uploads/Driving-school-form.pdf');
+    $data = $pdf->getData();
+    
+    dd($pdf);
+    
+    // $pdf->fillForm([
+    //         'name'=>'athik',
+    //         'nested.name' => 'valX',
+    //     ])
+    //     ->needAppearances()
+    //     ->saveAs('/pdf/filled.pdf');
+    
+    //     if (!$pdf->saveAs('my.pdf')) {
+    //     $error = $pdf->getError();
+    // }
+
+    // return $error;
+})->middleware('auth');
