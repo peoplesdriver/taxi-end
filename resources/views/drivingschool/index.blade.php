@@ -48,6 +48,7 @@
                                         <th>Driving Test</th>
                                         <th>Theory Test</th>
                                         <th>Joined on</th>
+                                        <th>Slip Number</th>
                                         <th>Registered By</th>
                                         <th class="noprint">Actions</th>
                                     </tr>
@@ -63,6 +64,7 @@
                                         <td class="verticalAlign">{{ $student->remarks }}</td>
                                         <td class="verticalAlign">{{ $student->finisheddate }}</td>
                                         <td class="verticalAlign">{{ $student->theorydate }}</td>
+                                        <td class="verticalAlign">TDS/{{ date("Y") }}/{{ date("m") }}/{{ $payment->id }}</td>
                                         <td class="verticalAlign">{{ $student->created_at->toFormattedDateString() }}</td>
                                         <td class="verticalAlign">{{ $student->user->name }}</td>
                                         <td class="noprint">
