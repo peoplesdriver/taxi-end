@@ -45,8 +45,8 @@
                                         <th>Category</th>
                                         <th>Instructor</th>
                                         <th>Remarks</th>
-                                        <th>Driving Test</th>
-                                        <th>Theory Test</th>
+                                        {{-- <th>Driving Test</th>
+                                        <th>Theory Test</th> --}}
                                         <th>Slip Number</th>
                                         <th>Joined on</th>
                                         <th>Registered By</th>
@@ -62,8 +62,8 @@
                                         <td class="verticalAlign">{{ $student->category }}</td>
                                         <td class="verticalAlign">{{ $student->instructor }}</td>
                                         <td class="verticalAlign">{{ $student->remarks }}</td>
-                                        <td class="verticalAlign">{{ $student->finisheddate }}</td>
-                                        <td class="verticalAlign">{{ $student->theorydate }}</td>
+                                        {{-- <td class="verticalAlign">{{ $student->finisheddate }}</td>
+                                        <td class="verticalAlign">{{ $student->theorydate }}</td> --}}
                                         <td class="verticalAlign">TDS/{{ date("Y") }}/{{ date("m") }}/{{ $student->id }}</td>
                                         <td class="verticalAlign">{{ $student->created_at->toFormattedDateString() }}</td>
                                         <td class="verticalAlign">{{ $student->user->name }}</td>
