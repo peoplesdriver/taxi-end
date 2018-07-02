@@ -6,6 +6,7 @@
             <th>Taxi Number</th>
             <th>Month</th>
             <th>Year</th>
+            <th>Sub Total</th>
             <th>Total Paid</th>
             <th>Paid</th>
             <th>Created At</th>
@@ -20,6 +21,7 @@
                 <td>{{ $payment->taxi->taxiNo }}</td>
                 <td>{{ Carbon\Carbon::createFromFormat('m', $payment->month)->format('F') }}</td>
                 <td>{{ $payment->year }}</td>
+                <td>{{ $payment->subtotal }}</td>
                 <td>{{ $payment->totalAmount }}</td>
                 <td>{{ $payment->paymentStatus }}</td>
                 <td>{{ $payment->created_at }}</td>
