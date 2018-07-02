@@ -47,8 +47,8 @@
                                         <th>Remarks</th>
                                         <th>Driving Test</th>
                                         <th>Theory Test</th>
-                                        <th>Joined on</th>
                                         <th>Slip Number</th>
+                                        <th>Joined on</th>
                                         <th>Registered By</th>
                                         <th class="noprint">Actions</th>
                                     </tr>
