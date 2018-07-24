@@ -5,5 +5,6 @@
     "/css/theory.css": "/css/theory.css",
     "/css/dhivehi.css": "/css/dhivehi.css",
     "/js/theory.js": "/js/theory.js",
+    "/js/display/app.js": "/js/display/app.js",
     "/js/display.js": "/js/display.js"
 }

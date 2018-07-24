@@ -381,10 +381,96 @@ Route::get('/display/{center_name}', function ($center_name) {
 
     return view('displayNew.demoPhp', compact('taxis', 'title', 'flashmessage'));
 })->middleware('auth');
+
+Route::get('/display/{center_name}/three', function ($center_name) {
+    $taxis = \App\Taxi::where('active', '1')
+                    ->where('center_name', $center_name)
+                    ->where('taxiNo', '!=', '-')
+                    ->with('driver')
+                    ->with('callcode')
+                    ->orderBy('cc')
+                    ->get();
+    $center = \App\TaxiCenter::find($taxis[0]->callcode->center_id);
+    $title = $center->name.' - '.$center->telephone;
+
+    function checkThreeMonths($id) {
+        $now = Carbon::now();
+        // Current Month
+        $day = $now->format('d');
+        $month = $now->format('m');
+        $year = $now->format('Y');
+        // Last 3 Month
+        $month_3 = Carbon::now()->subMonth(3)->format('m');
+        $year_3 = Carbon::now()->subMonth(3)->format('Y');
+        // Next Month
+        $next_month = Carbon::now()->addMonth(1)->format('m');
+        $next_year = Carbon::now()->addMonth(1)->format('Y');
+
+        // dd($month, $year, $month_3, $year_3, $next_month, $next_year);
+
+        if ($day < 25) {
+            $payment_history = paymentHistory::where('taxi_id', $id)->where('month', '>', $month_3)->where('year', '=', $year_3)->where('paymentStatus', 0)->get();
+            // before payment generation
+            if ($payment_history->isEmpty()) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        
+        if ($day >= 25) {
+            // assume payment generated (probably)
+            return false;
+        }
+    }
+            
+    foreach ($taxis as $key => $taxi) {
+        if (!is_null($taxi->driver)) {
+            if ($taxi->driver->driverName == '-'){
+                $taxis->pull($key);
+            }
+        } else {
+            $taxis->pull($key);
+        }
+        if (checkThreeMonths($taxi->id)) {
+            $taxis->pull($key);
+        }
+    }
+
+    $flashmessage = Flashmessage::find(1);
+
+    return view('displayNew.demoPhp', compact('taxis', 'title', 'flashmessage'));
+})->middleware('auth');
+
 Route::get('api/display/{center_name}', function ($center_name) {
-    $taxis = \App\Taxi::where('center_name', $center_name)->with('driver')->with('callcode')->get();
+    $taxis = \App\Taxi::where('active', '1')
+                    ->where('center_name', $center_name)
+                    ->where('taxiNo', '!=', '-')
+                    ->with('driver')
+                    ->with('callcode')
+                    ->orderBy('cc')
+                    ->get();
+    
+    foreach ($taxis as $key => $taxi) {
+        if (!is_null($taxi->driver)) {
+            if ($taxi->driver->driverName == '-'){
+                $taxis->pull($key);
+            }
+        } else {
+            $taxis->pull($key);
+        }
+    }
+
     return $taxis;
 })->middleware('auth');
+
+Route::get('display/{center_name}/vue', function($center_name){
+    $center = \App\TaxiCenter::where('cCode', $center_name)->first();
+    // return $center;
+    $title = $center->name.' - '.$center->telephone;
+    return view('displayNew.demoVue', compact('center_name', 'title'));
+});
+
 Route::get('/api/driver', function(Request $request) {
     $driver = \App\Driver::with('taxi')->find($request->id);
     $driver->paymentStatus = '<h4>Paid</h4>';
@@ -1163,3 +1249,7 @@ Route::get('/pdf-filler', function () {
     
     dd($pdf);
 })->middleware('auth');
+
+Route::get('/post-students-to-new-site', function() {
+    
+});

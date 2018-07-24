@@ -92,13 +92,13 @@
         </div>
         <div class="row no-gutters">
             @foreach ($taxis as $taxi)
-                <div class="col-lg-1 col-md-2 col-sm-6 col-xs-6" data-toggle="modal" data-target="#driverDetail"
-                @if ($taxi->driver)
-                    onclick="driverModal('{{ $taxi->driver->id }}')"
-                @endif
-                >
-                    <?php $color = checkColor($taxi->state, $taxi->anualFeeExpiry, $taxi->roadWorthinessExpiry, $taxi->insuranceExpiry, $taxi->driver->driverPermitExp) ?>
-                    @if (checkStatus(request()->status, $color))
+                <?php $color = checkColor($taxi->state, $taxi->anualFeeExpiry, $taxi->roadWorthinessExpiry, $taxi->insuranceExpiry, $taxi->driver->driverPermitExp) ?>
+                @if (checkStatus(request()->status, $color))
+                    <div class="col-lg-1 col-md-2 col-sm-6 col-xs-6" data-toggle="modal" data-target="#driverDetail"
+                    @if ($taxi->driver)
+                        onclick="driverModal('{{ $taxi->driver->id }}')"
+                    @endif
+                    >
                         <div class="box {{ $color }}">
                             <div class="callCode circle {{ $color }}-color">
                                 {{ $taxi->callcode->callCode }}
@@ -114,8 +114,8 @@
                                 @endif
                             </div>
                         </div>
-                    @endif   
-                </div>    
+                    </div>    
+                @endif  
             @endforeach
         </div>
     </div>

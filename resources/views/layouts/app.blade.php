@@ -154,6 +154,7 @@
                             <ul class="dropdown-menu">
                                 @foreach ($taxi_centers as $center)
                                 <li><a target="_blank" href="/display/{{ $center->cCode }}">Display {{ $center->name }}</a></li>    
+                                <li><a target="_blank" href="/display/{{ $center->cCode }}">Display {{ $center->name }} (three months)</a></li>    
                                 @endforeach
                             </ul>
                         </li>
