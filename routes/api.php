@@ -152,8 +152,50 @@ Route::group(['prefix' => 'v2'], function () {
         });
 
         Route::get('play/taxi/{id}', function($id) {
-            $payment_history = paymentHistory::where('taxi_id', $id)->get();
-            return $payment_history;
+            $now = Carbon::now();
+            // Current Month
+            $day = $now->format('d');
+            $month = $now->format('m');
+            $year = $now->format('Y');
+            // Last 3 Month
+            $month_3 = Carbon::now()->subMonth(3)->format('m');
+            $year_3 = Carbon::now()->subMonth(3)->format('Y');
+            // Next Month
+            $next_month = Carbon::now()->addMonth(1)->format('m');
+            $next_year = Carbon::now()->addMonth(1)->format('Y');
+
+            // dd($month, $year, $month_3, $year_3, $next_month, $next_year);
+
+            if ($day < 25) {
+                $payment_history = paymentHistory::where('taxi_id', $id)
+                                                ->where('month', '>', $month_3)
+                                                ->where('year', '=', $year_3)
+                                                ->where('paymentStatus', 0)
+                                                ->get();
+                                                
+                // before payment generation
+                if (count($payment_history) < 3) {
+                    return $payment_history;
+                } else {
+                    return $payment_history;
+                }
+            }
+            
+            if ($day >= 25) {
+                // assume payment generated (probably)
+                $payment_history = paymentHistory::where('taxi_id', $id)
+                                                ->where('month', '>', $month_3)
+                                                ->where('month', '<', $next_month)
+                                                ->where('year', '=', $next_year)
+                                                ->where('paymentStatus', 0)
+                                                ->get();
+                                                
+                if (count($payment_history) < 3) {
+                    return $payment_history;
+                } else {
+                    return $payment_history;
+                }
+            }
         });
 
         Route::get('/taxi/three-month/{id}', function($id) {

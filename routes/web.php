@@ -425,7 +425,18 @@ Route::get('/display/{center_name}/three', function ($center_name) {
         
         if ($day >= 25) {
             // assume payment generated (probably)
-            return false;
+            $payment_history = paymentHistory::where('taxi_id', $id)
+                                            ->where('month', '>', $month_3)
+                                            ->where('month', '<', $next_month)
+                                            ->where('year', '=', $next_year)
+                                            ->where('paymentStatus', 0)
+                                            ->get();
+                                            
+            if (count($payment_history) < 3) {
+                return false;
+            } else {
+                return true;
+            }
         }
     }
             
