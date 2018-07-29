@@ -86,6 +86,7 @@
                                     <th>Taxi Number</th>
                                     <th>Center Name</th>
                                     <th>Taxi Fee</th>
+                                    <th>Slip Number</th>
                                     <th>Date</th>
                                     <th>Status</th>
                                 </tr>
@@ -98,6 +99,7 @@
                                         <td>{{ $payment->taxi->taxiNo }}</td>
                                         <td>{{ $payment->taxi->callcode->taxicenter->name }}</td>
                                         <td>{{ $payment->taxi->rate }}</td>
+                                        <td>TPL/{{ date("Y") }}/{{ date("m") }}/{{ $payment->id }}</td>
                                         <td>{{ Carbon\Carbon::createFromFormat('m', $payment->month)->format('F') . ' ' . $payment->year }}</td>
                                         <td>
                                             @if ($payment->paymentStatus == "0")
