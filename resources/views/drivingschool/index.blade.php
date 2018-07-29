@@ -50,6 +50,8 @@
                                         <th>Slip Number</th>
                                         <th>Joined on</th>
                                         <th>Registered By</th>
+                                        <th>GST</th>
+                                        <th>GST (exlusive)</th>
                                         <th class="noprint">Actions</th>
                                     </tr>
                                 </thead>
@@ -67,6 +69,8 @@
                                         <td class="verticalAlign">TDS/{{ date("Y") }}/{{ date("m") }}/{{ $student->id }}</td>
                                         <td class="verticalAlign">{{ $student->created_at->toFormattedDateString() }}</td>
                                         <td class="verticalAlign">{{ $student->user->name }}</td>
+                                        <td class="verticalAlign"><?php  echo round( $payment->rate  * 6/106 ,2 );?></td>
+                                        <td class="verticalAlign">{{ $payment->rate - $tax }}</td>
                                         <td class="noprint">
                                             @role('super-admin|admin')
                                             <a style="margin:1px" class="btn btn-danger" href="{{ url()->current() }}/students/{{ $student->id }}/delete">Delete</a>
