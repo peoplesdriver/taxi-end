@@ -30,7 +30,7 @@ Route::get('/', function () {
     $flashmessage = Flashmessage::find(1);
 
     $students = \App\DrivingS::latest()->take(5)->get();
-    $payments = \App\paymentHistory::where('paymentStatus', '1')->orderBy('updated_at', 'DESC')->take(5)->get();
+    $payments = \App\paymentHistory::where('paymentStatus', '1')->orderBy('updated_at', 'DESC')->take(10)->get();
 
     $now = Carbon::now();
 
@@ -538,6 +538,78 @@ Route::group(['prefix' => 'report', 'middleware' => ['role:super-admin|admin']],
     });
     Route::get('/payment-history-unpaid', function () {
         $taxis = \App\Taxi::all();
+        return view('report.paymentHistoryUnpaid.index', compact('taxis'));
+    });
+
+    Route::get('/payment-history-unpaid/{center_name}', function ($center_name) {
+        $taxis = \App\Taxi::where('active', '1')
+                        ->where('center_name', $center_name)
+                        ->where('taxiNo', '!=', '-')
+                        ->with('driver')
+                        ->with('callcode')
+                        ->orderBy('cc')
+                        ->get();
+
+        function checkThreeMonths($id) {
+            $now = Carbon::now();
+            // Current Month
+            $day = $now->format('d');
+            $month = $now->format('m');
+            $year = $now->format('Y');
+            // Last 3 Month
+            $month_3 = Carbon::now()->subMonth(3)->format('m');
+            $year_3 = Carbon::now()->subMonth(3)->format('Y');
+            // Next Month
+            $next_month = Carbon::now()->addMonth(1)->format('m');
+            $next_year = Carbon::now()->addMonth(1)->format('Y');
+
+            // dd($month, $year, $month_3, $year_3, $next_month, $next_year);
+
+            if ($day < 25) {
+                $payment_history = paymentHistory::where('taxi_id', $id)
+                                                ->where('month', '>', $month_3)
+                                                ->where('year', '=', $year_3)
+                                                ->where('paymentStatus', 0)
+                                                ->get();
+                                                
+                // before payment generation
+                if (count($payment_history) < 3) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            
+            if ($day >= 25) {
+                // assume payment generated (probably)
+                $payment_history = paymentHistory::where('taxi_id', $id)
+                                                ->where('month', '>', $month_3)
+                                                ->where('month', '<', $next_month)
+                                                ->where('year', '=', $next_year)
+                                                ->where('paymentStatus', 0)
+                                                ->get();
+                
+                if (count($payment_history) < 3) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+                
+        foreach ($taxis as $key => $taxi) {
+            if (!is_null($taxi->driver)) {
+                if ($taxi->driver->driverName == '-'){
+                    $taxis->pull($key);
+                }
+            } else {
+                $taxis->pull($key);
+            }
+            if (checkThreeMonths($taxi->id)) {
+                $taxis->pull($key);
+            }
+        }
+
         return view('report.paymentHistoryUnpaid.index', compact('taxis'));
     });
 

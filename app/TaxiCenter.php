@@ -20,4 +20,14 @@ class TaxiCenter extends Model
     {
         return $this->hasMany('App\CallCode');
     }
+
+    public function taxis()
+    {
+        return $this->hasMany('App\Taxi');
+    }
+
+    public function callcodes()
+    {
+        return $this->hasMany('App\CallCode', 'center_id');
+    }
 }
