@@ -51,7 +51,7 @@ function getMonthName($monthNumber)
                             @endif
                             <td>{{ $payment->taxi->taxiNo }}</td>
                             <td>{{ $payment->taxi->callcode->taxicenter->name }}</td>
-                            <td>TPL/{{ date("Y") }}/{{ date("m") }}/{{ $payment->id }}</td>
+                            <td>TPL/{{ $payment->year }}/{{ $payment->month }}/{{ $payment->id }}</td>
                             <td>{{ getMonthName($payment->month) . ' ' . $payment->year }}</td>
                             <td>
                                 @if ($payment->paymentStatus == "0")
