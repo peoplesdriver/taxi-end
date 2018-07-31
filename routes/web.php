@@ -30,7 +30,7 @@ Route::get('/', function () {
     $flashmessage = Flashmessage::find(1);
 
     $students = \App\DrivingS::latest()->take(5)->get();
-    $payments = \App\paymentHistory::where('paymentStatus', '1')->orderBy('updated_at', 'DESC')->take(10)->get();
+    $payments = \App\paymentHistory::where('paymentStatus', '1')->orderBy('updated_at', 'DESC')->take(15)->get();
 
     $now = Carbon::now();
 
