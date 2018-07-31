@@ -1,3 +1,10 @@
+<?php
+    function getMonthName($monthNumber)
+    {
+        return date("F", mktime(0, 0, 0, $monthNumber, 1));
+    }
+?>
+
 @extends('layouts.app')
 
 @section('content')
@@ -81,12 +88,10 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Call Code</th>
-                                    <th>Driver Name</th>
-                                    <th>Taxi Number</th>
-                                    <th>Center Name</th>
-                                    <th>Taxi Fee</th>
+                                    <th>Center Name - Call Code ( Taxi No )</th>
                                     <th>Slip Number</th>
+                                    <th>Taxi Fee</th>
+                                    <th>Driver Name</th>
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>Paid Date and Time</th>
@@ -95,13 +100,11 @@
                             <tbody>
                                 @foreach ($payments as $payment)
                                     <tr>   
-                                        <td>{{ $payment->taxi->callcode->callCode }}</td>
-                                        <td>{{ $payment->taxi->driver->driverName  }}</td>
-                                        <td>{{ $payment->taxi->taxiNo }}</td>
-                                        <td>{{ $payment->taxi->callcode->taxicenter->name }}</td>
-                                        <td>{{ $payment->taxi->rate }}</td>
+                                        <td>{{ $payment->taxi->callcode->taxicenter->name }} - {{ $payment->taxi->callcode->callCode }} ( {{ $payment->taxi->taxiNo }} )</td>
                                         <td>TPL/{{ $payment->updated_at->format("Y") }}/{{ $payment->updated_at->format("m") }}/{{ $payment->id }}</td>
-                                        <td>{{ Carbon\Carbon::createFromFormat('m', $payment->month)->format('F') . ' ' . $payment->year }}</td>
+                                        <td>{{ $payment->taxi->rate }}</td>
+                                        <td>{{ $payment->taxi->driver->driverName  }}</td>
+                                        <td>{{ getMonthName($payment->month) . ' ' . $payment->year }}</td>
                                         <td>
                                             @if ($payment->paymentStatus == "0")
                                                 <button id="status" style="display: block; margin: auto;"  class="btn-danger" disabled>Not Paid</button>
