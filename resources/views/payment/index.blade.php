@@ -1,3 +1,10 @@
+<?php
+function getMonthName($monthNumber)
+{
+    return date("F", mktime(0, 0, 0, $monthNumber, 1));
+}
+?>
+
 @extends('layouts.app')
 
 @section('content')
@@ -45,7 +52,7 @@
                             <td>{{ $payment->taxi->taxiNo }}</td>
                             <td>{{ $payment->taxi->callcode->taxicenter->name }}</td>
                             <td>TPL/{{ date("Y") }}/{{ date("m") }}/{{ $payment->id }}</td>
-                            <td>{{ Carbon\Carbon::createFromFormat('m', $payment->month)->format('F') . ' ' . $payment->year }}</td>
+                            <td>{{ getMonthName($payment->month) . ' ' . $payment->year }}</td>
                             <td>
                                 @if ($payment->paymentStatus == "0")
                                     <button id="status" style="display: block; margin: auto;"  class="btn-danger" disabled>Not Paid</button>
