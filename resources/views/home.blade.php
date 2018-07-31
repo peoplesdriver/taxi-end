@@ -89,6 +89,7 @@
                                     <th>Slip Number</th>
                                     <th>Date</th>
                                     <th>Status</th>
+                                    <th>Date and Time</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,6 +109,9 @@
                                             @if ($payment->paymentStatus == "1")
                                                 <button id="status" style="display: block; margin: auto;"  class="btn-success" disabled>Paid</button>
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $payment->updated_at->format('d/m/Y h:i:s a') }}
                                         </td>
                                     </tr>
                                 @endforeach
