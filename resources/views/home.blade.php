@@ -89,7 +89,7 @@
                                     <th>Slip Number</th>
                                     <th>Date</th>
                                     <th>Status</th>
-                                    <th>Date and Time</th>
+                                    <th>Paid Date and Time</th>
                                 </tr>
                             </thead>
                             <tbody>
