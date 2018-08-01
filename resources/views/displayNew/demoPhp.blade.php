@@ -66,7 +66,7 @@
             overflow: hidden;
             margin-bottom: 10px;
             font-weigh: bold;
-            font-size: 10px;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -74,19 +74,19 @@
     <div id="app">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6">
-                    <h1 class="title">{{ $title }}</h1>
+                <div class="col-md-3">
+                    <h3 class="title">{{ $title }}</h3>
                 </div>
                 <div class="col-md-6">
-                    <div class="buttons">
-                        <a href="{{ url()->current() }}" class="btn btn-info">All</a>
-                        <a href="{{ url()->current() }}?status=paid"  class="btn btn-success">Paid</a>
-                        <a href="{{ url()->current() }}?status=unpaid"  class="btn btn-danger">Unpaid</a>
-                        <a href="{{ url()->current() }}?status=expired"  class="btn purple">Expired</a>
-                    </div>
-                </div>
-                <div class="col-md-12">
                     <div class="marquee">{{ $flashmessage->message }}</div>
+                </div>
+                <div class="col-md-3">
+                    <div class="buttons">
+                        <a href="{{ url()->current() }}" class="btn btn-info btn-sm">All</a>
+                        <a href="{{ url()->current() }}?status=paid"  class="btn btn-success btn-sm">Paid</a>
+                        <a href="{{ url()->current() }}?status=unpaid"  class="btn btn-danger btn-sm">Unpaid</a>
+                        <a href="{{ url()->current() }}?status=expired"  class="btn purple btn-sm">Expired</a>
+                    </div>
                 </div>
             </div>
         </div>
