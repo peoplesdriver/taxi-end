@@ -75,7 +75,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3">
-                    <h3 class="title">{{ $title }}</h3>
+                    <h4 class="title"><?php echo date('F') ?> - {{ $title }}</h4>
                 </div>
                 <div class="col-md-6">
                     <div class="marquee">{{ $flashmessage->message }}</div>
