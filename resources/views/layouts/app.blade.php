@@ -158,8 +158,11 @@
                             </a>
                             <ul class="dropdown-menu">
                                 @foreach ($taxi_centers as $center)
-                                    @if ($user_role == $center->cCode OR $user_role == 'super-admin' OR $user_role == 'admin' OR $user_role == 'officer')
-                                        <li><a target="_blank" href="/display/{{ $center->cCode }}">Display {{ $center->name }}</a></li>    
+                                    @if ($user_role == $center->cCode)
+                                    <li><a target="_blank" href="/display/{{ $center->cCode }}/three">Display {{ $center->name }}</a></li>    
+                                    @endif
+                                    @if ($user_role == 'super-admin' OR $user_role == 'admin' OR $user_role == 'officer')
+                                        <li><a target="_blank" href="/display/{{ $center->cCode }}">Display {{ $center->name }}</a></li>
                                         <li><a target="_blank" href="/display/{{ $center->cCode }}/three">Display {{ $center->name }} (three months)</a></li>    
                                     @endif
                                 @endforeach
