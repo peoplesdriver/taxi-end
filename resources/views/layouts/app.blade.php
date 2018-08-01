@@ -151,8 +151,9 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Displays <span class="caret"></span>
                                 <?php 
-                                    $user_role = Auth::user()->getRoleNames()->toArray(); 
-                                    echo $user_role[0];
+                                    $user_roles = Auth::user()->getRoleNames()->toArray(); 
+                                    $user_role = $user_roles[0];
+                                    echo $user_role;
                                 ?>
                             </a>
                             <ul class="dropdown-menu">
