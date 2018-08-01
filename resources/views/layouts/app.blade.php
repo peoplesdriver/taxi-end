@@ -153,7 +153,7 @@
                                 <?php 
                                     $user_roles = Auth::user()->getRoleNames()->toArray(); 
                                     $user_role = $user_roles[0];
-                                    echo $user_role;
+                                    // echo $user_role;
                                 ?>
                             </a>
                             <ul class="dropdown-menu">
