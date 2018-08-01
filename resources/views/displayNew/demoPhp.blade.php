@@ -66,7 +66,7 @@
             overflow: hidden;
             margin-bottom: 10px;
             font-weigh: bold;
-            font-size: 20px;
+            font-size: 10px;
         }
     </style>
 </head>
