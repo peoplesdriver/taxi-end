@@ -155,6 +155,11 @@
                                 @endfor
                             </tbody>
                         </table>
+
+                        <hr>
+
+                        <canvas id="myChart" width="400" height="400"></canvas>
+
                     </div>
                 </div>
             </div>
@@ -162,6 +167,18 @@
     </div>
 </div>
 @endsection
+
+<?php
+
+$dataPoints = array();
+for ($i = 1; $i < 13; $i++) {
+    array_push($dataPoints, array(
+        "label" => Carbon\Carbon::createFromFormat('m', $i)->format('F'),
+        "price" => \App\paymentHistory::getTotalPrice($i, '2018'),
+    ));
+}
+// dd(json_encode($dataPoints));
+?>
 
 @section('js')
     <script>
@@ -188,4 +205,32 @@
         setInterval(updateDate, 1000);
         updateDate();
     </script>
+
+    <script>
+        var jsonfile = {
+            "jsonarray": <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+        }
+        var labels = jsonfile.jsonarray.map(function(e) {
+            return e.label;
+        });
+        var data = jsonfile.jsonarray.map(function(e) {
+            return e.price;
+        });
+        console.log(jsonfile);
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Earnings',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ]
+                }]
+            }
+        });
+    </script>
+    
 @endsection

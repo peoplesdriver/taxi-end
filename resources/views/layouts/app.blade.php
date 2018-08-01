@@ -146,15 +146,21 @@
                             </ul>
                         </li>
                         @endrole
-                        @role('super-admin|admin|officer')
+                        @role('super-admin|admin|officer|JRMM|CBMM')
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Displays <span class="caret"></span>
+                                <?php 
+                                    $user_role = Auth::user()->getRoleNames()->toArray(); 
+                                    echo $user_role[0];
+                                ?>
                             </a>
                             <ul class="dropdown-menu">
                                 @foreach ($taxi_centers as $center)
-                                <li><a target="_blank" href="/display/{{ $center->cCode }}">Display {{ $center->name }}</a></li>    
-                                <li><a target="_blank" href="/display/{{ $center->cCode }}/three">Display {{ $center->name }} (three months)</a></li>    
+                                    @if ($user_role == $center->cCode OR $user_role == 'super-admin' OR $user_role == 'admin' OR $user_role == 'officer')
+                                        <li><a target="_blank" href="/display/{{ $center->cCode }}">Display {{ $center->name }}</a></li>    
+                                        <li><a target="_blank" href="/display/{{ $center->cCode }}/three">Display {{ $center->name }} (three months)</a></li>    
+                                    @endif
                                 @endforeach
                             </ul>
                         </li>
@@ -222,6 +228,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-html5-1.3.1/b-print-1.3.1/r-2.1.1/datatables.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     @yield('js')
 </body>
 </html>
