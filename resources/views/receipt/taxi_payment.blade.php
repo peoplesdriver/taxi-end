@@ -47,15 +47,15 @@
                     <table width="100%" border="0">
                         <tr>
                             <td><strong>Date Paid:</strong></td>
-                            <td align="right">{{ $payment->updated_at->format('d/m/Y') }}</td>
+                            <td align="right" contenteditable="true">{{ $payment->updated_at->format('d/m/Y') }}</td>
                         </tr>
                         <tr>
                             <td><strong>Slip No. :</strong></td>
-                            <td align="right">TPL/{{ date("Y") }}/{{ date("m") }}/{{ $payment->id }}</td>
+                            <td align="right" contenteditable="true">TPL/{{ date("Y") }}/{{ date("m") }}/{{ $payment->id }}</td>
                         </tr>
                         <tr>
                             <td><strong>TIN No. :</strong></td>
-                            <td align="right">{{ $payment->taxi->callcode->taxicenter->company->GSTTin }}</td>
+                            <td align="right" contenteditable="true">{{ $payment->taxi->callcode->taxicenter->company->GSTTin }}</td>
                         </tr>
                     </table>
                 </td>
@@ -75,60 +75,60 @@
                             <td width="14%" align="center"><strong>TOTAL</strong></td>
                         </tr>
                         <tr>
-                            <td rowspan="5" class="doubleline" style="font-weight:normal">
+                            <td rowspan="5" class="doubleline" style="font-weight:normal" contenteditable="true">
                                 &nbsp;T-{{ $payment->taxi->taxiNo }}<br>
                                 &nbsp;Call Code: {{ $payment->taxi->callCode->full_callcode }}<br>
                                 &nbsp;Driver Name: {{ $payment->taxi->driver->driverName }}<br>
                                 &nbsp;A{{ $payment->taxi->driver->driverIdNo }}<br>
                                 &nbsp;{{ $payment->taxi->driver->driverMobile }}<br>
                             </td>
-                            <td align="center">&nbsp;{{ $monthName }}/{{ $payment->year }}</td>
-                            <td>&nbsp;{{ $payment->desc }}</td>
-                            <td align="center">{{ $payment->qty }}</td>
-                            <td align="center">{{ $payment->total }}</td>
-                            <td align="center">{{ $payment->total }}</td>
+                            <td align="center" contenteditable="true">&nbsp;{{ $monthName }}/{{ $payment->year }}</td>
+                            <td contenteditable="true">&nbsp;{{ $payment->desc }}</td>
+                            <td align="center" contenteditable="true">{{ $payment->qty }}</td>
+                            <td align="center" contenteditable="true">{{ $payment->total }}</td>
+                            <td align="center" contenteditable="true">{{ $payment->total }}</td>
                         </tr>
                         <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td align="center">&nbsp;</td>
-                            <td align="center">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
+                            <td contenteditable="true">&nbsp;</td>
+                            <td contenteditable="true">&nbsp;</td>
+                            <td align="center" contenteditable="true">&nbsp;</td>
+                            <td align="center" contenteditable="true">&nbsp;</td>
+                            <td align="right" contenteditable="true">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td align="center">&nbsp;</td>
-                            <td align="center">&nbsp;</td>
-                            <td align="right">&nbsp;</td>
+                            <td contenteditable="true">&nbsp;</td>
+                            <td contenteditable="true">&nbsp;</td>
+                            <td align="center" contenteditable="true">&nbsp;</td>
+                            <td align="center" contenteditable="true">&nbsp;</td>
+                            <td align="right" contenteditable="true">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
+                            <td contenteditable="true">&nbsp;</td>
+                            <td contenteditable="true">&nbsp;</td>
                             <td colspan="2"  align="center">SUBTOTAL </td>
-                            <td align="center" >{{ $payment->total }}</td>
+                            <td align="center" contenteditable="true">{{ $payment->total }}</td>
                         </tr>
                         <tr>
-                            <td class="doubleline">&nbsp;</td>
-                            <td class="doubleline">&nbsp;</td>
+                            <td class="doubleline" contenteditable="true">&nbsp;</td>
+                            <td class="doubleline" contenteditable="true">&nbsp;</td>
                             <td colspan="2" align="center">GST 6%</td>
-                            <td align="center">-</td>
+                            <td align="center" contenteditable="true">-</td>
                         </tr>
                         <tr>
                             <td colspan="2">&nbsp;</td>
-                            <td class="doubleline">&nbsp;&nbsp;&nbsp; Collected By :
+                            <td class="doubleline" contenteditable="true">&nbsp;&nbsp;&nbsp; Collected By :
                                 {{ $payment->user->name }}
                             </td>
                             <td colspan="2" align="center" class="doubleline">TOTAL</td>
-                            <td class="doubleline" align="center">{{ $payment->total }}</td>
+                            <td class="doubleline" align="center" contenteditable="true">{{ $payment->total }}</td>
                         </tr>
                         <tr>
                             <td colspan="3" height="30px" style="border-left:0px">&nbsp;&nbsp;&nbsp;&nbsp; Follow Traffic Signals, Avoid Overtaking from Left and Avoid Cell Phones while Driving.</td>
                             <td colspan="2" align="center" class="doubleline">Date and Time </td>
-                            <td align="center" class="doubleline" id="todaysDate"></td>
+                            <td align="center" class="doubleline" id="todaysDate" contenteditable="true"></td>
                         </tr>
                         <tr>
-                            <td height="36" colspan="6" align="center" style="border-top:1px solid #000"><strong>
+                            <td height="36" colspan="6" align="center" style="border-top:1px solid #000" contenteditable="true"><strong>
                                 Address: {{ $payment->taxi->callcode->taxicenter->address }} | Telephone: {{ $payment->taxi->callcode->taxicenter->telephone }} | Fax: {{ $payment->taxi->callcode->taxicenter->fax }} | Email: {{ $payment->taxi->callcode->taxicenter->email }} | Website: taviyani.com.mv
                                 </strong>
                             </td>
