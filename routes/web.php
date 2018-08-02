@@ -1341,3 +1341,78 @@ Route::get('/pdf-filler', function () {
 Route::get('/post-students-to-new-site', function() {
     
 });
+
+Route::group(['prefix' => 'excel', 'middleware' => ['role:super-admin']], function () {
+    Route::get('/taxi-owner/{center_name}', function ($cCode) {
+        // Taxi
+        $taxis = \App\Taxi::where('center_name', $cCode)->where('active', '1')->where('taxiOwnerMobile', '!=', null)->where('taxiOwnerMobile', '!=', '-')->select('taxiNo', 'taxiOwnerName','taxiOwnerMobile')->get();        
+        // $taxi_numbers = Helper::validate_numbers($taxis);
+        
+        foreach ($taxis as $taxi) {
+            $old = [
+                $taxi->taxiOwnerMobile
+            ];
+            $new = Helper::validate_numbers($old);
+            if (!empty($new)) {
+                $taxi->taxiOwnerMobile = $new[0];
+                $taxi->save();
+            }
+        }
+        // return $taxis;
+        return view('exports.taxiOwner', compact('taxis'));
+    });
+
+    Route::get('/drivers/{center_name}', function($cCode) {
+        $taxis = \App\Taxi::where('active', '1')
+                        ->where('center_name', $cCode)
+                        ->where('taxiNo', '!=', '-')
+                        ->with('driver')
+                        ->with('callcode')
+                        ->orderBy('cc')
+                        ->get();
+        
+        foreach ($taxis as $key => $taxi) {
+            if (!is_null($taxi->driver)) {
+                if ($taxi->driver->driverName == '-'){
+                    $taxis->pull($key);
+                }
+            } 
+            else 
+            {
+                $taxis->pull($key);
+            }
+        }
+
+        return view('exports.driverNumbers', compact('taxis'));
+    });
+});
+
+Route::get('make-everything-green-again', function() {
+    $taxis = \App\Taxi::where('taxiNo', '!=', '-')
+                    ->with('driver')
+                    ->with('callcode')
+                    ->orderBy('cc')
+                    ->get();
+
+    foreach ($taxis as $taxi) {
+        $taxi->anualFeeExpiry = '2018-12-01';
+        $taxi->roadWorthinessExpiry = '2018-12-01';
+        $taxi->insuranceExpiry = '2018-12-01';
+
+        if (!is_null($taxi->driver)) {
+            if ($taxi->driver->driverName == '-'){
+                $driver = \App\Driver::find($taxi->driver->id);
+                $driver->driverPermitExp = '2018-12-01';
+                $driver->save();
+            }
+            $driver = \App\Driver::find($taxi->driver->id);
+            $driver->driverPermitExp = '2018-12-01';
+            $driver->save();
+        }
+
+        $taxi->save();
+        $driver->save();
+    }
+
+    return $taxis;
+});

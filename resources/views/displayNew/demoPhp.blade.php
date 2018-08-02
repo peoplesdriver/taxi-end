@@ -100,7 +100,7 @@
                     @endif
                     >
                         <div class="box {{ $color }}">
-                            <div class="callCode circle {{ $color }}-color">
+                            <div class="callCode circle" style="color: black;">
                                 {{ $taxi->callcode->callCode }}
                             </div>
                             <div class="taxiNo">
