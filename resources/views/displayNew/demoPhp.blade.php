@@ -306,6 +306,7 @@
 
         $('.marquee').marquee({
             duration: 10000,
+            direction: 'right'
         });
     </script>
 </body>
