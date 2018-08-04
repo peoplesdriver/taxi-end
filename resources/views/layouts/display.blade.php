@@ -38,6 +38,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet">
     <link href="{{ url('css/app.css') }}" rel="stylesheet">
+    <link href="/css/dhivehi.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Open Sans', sans-serif;

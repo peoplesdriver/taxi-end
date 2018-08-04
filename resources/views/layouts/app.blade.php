@@ -35,6 +35,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-html5-1.3.1/b-print-1.3.1/r-2.1.1/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css"/>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/dhivehi.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Open Sans', sans-serif;

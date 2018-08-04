@@ -78,7 +78,7 @@
                     <h4 class="title"><?php echo date('F') ?> - {{ $title }}</h4>
                 </div>
                 <div class="col-md-6">
-                    <div class="marquee">{{ $flashmessage->message }}</div>
+                    <div class="marquee dhivehi-font">{{ $flashmessage->message }}</div>
                 </div>
                 <div class="col-md-3">
                     <div class="buttons">
