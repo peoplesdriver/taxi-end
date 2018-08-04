@@ -75,8 +75,8 @@
     <div id="app">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3">
-                    <h4 class="title"><?php echo date('F') ?> - {{ $title }}</h4>
+                <div class="col-md-4">
+                    <h4 class="title"><?php echo date('F') ?> - {{ $title }} - <span id="todaysDate"></span></h4>
                 </div>
                 <div class="col-md-6">
                     <div class="marquee">
@@ -85,7 +85,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="buttons">
                         <a href="{{ url()->current() }}" class="btn btn-info btn-sm">All</a>
                         <a href="{{ url()->current() }}?status=paid"  class="btn btn-success btn-sm">Paid</a>
@@ -308,6 +308,33 @@
             duration: 10000,
             direction: 'right'
         });
+
+
     </script>
+
+<script>
+    function addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+
+    function updateDate()
+    {
+        var str = "";
+
+        var days = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+        var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+        var now = new Date();
+
+        str += addZero(now.getHours()) +":" + addZero(now.getMinutes()) + ":" + addZero(now.getSeconds());
+        document.getElementById("todaysDate").innerHTML = str;
+    }
+
+    setInterval(updateDate, 1000);
+    updateDate();
+</script>
 </body>
 </html>
