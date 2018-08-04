@@ -75,7 +75,7 @@
     <div id="app">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col">
                     <h4 class="title"><?php echo date('F') ?> - {{ $title }} - <span id="todaysDate"></span></h4>
                 </div>
                 <div class="col-md-6">
@@ -312,29 +312,29 @@
 
     </script>
 
-<script>
-    function addZero(i) {
-        if (i < 10) {
-            i = "0" + i;
+    <script>
+        function addZero(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
         }
-        return i;
-    }
 
-    function updateDate()
-    {
-        var str = "";
+        function updateDate()
+        {
+            var str = "";
 
-        var days = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-        var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+            var days = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+            var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
-        var now = new Date();
+            var now = new Date();
 
-        str += addZero(now.getHours()) +":" + addZero(now.getMinutes()) + ":" + addZero(now.getSeconds());
-        document.getElementById("todaysDate").innerHTML = str;
-    }
+            str +=  addZero(now.getDay()) +"/"+ addZero(now.getMonth() + 1) +"/"+ now.getFullYear() + " - " + addZero(now.getHours()) +":" + addZero(now.getMinutes()) + ":" + addZero(now.getSeconds());
+            document.getElementById("todaysDate").innerHTML = str;
+        }
 
-    setInterval(updateDate, 1000);
-    updateDate();
-</script>
+        setInterval(updateDate, 1000);
+        updateDate();
+    </script>
 </body>
 </html>

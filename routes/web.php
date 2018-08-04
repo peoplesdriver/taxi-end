@@ -365,7 +365,7 @@ Route::get('/display/{center_name}', function ($center_name) {
                     ->orderBy('cc')
                     ->get();
     $center = \App\TaxiCenter::find($taxis[0]->callcode->center_id);
-    $title = $center->name.' - '.$center->telephone;
+    $title = $center->name;
 
     foreach ($taxis as $key => $taxi) {
         if (!is_null($taxi->driver)) {
