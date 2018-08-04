@@ -81,7 +81,7 @@
                 <div class="col-md-6">
                     <div class="marquee">
                         <span class="dhivehi-font dhivehi-rtl">
-                            {{ $flashmessage->message }}    
+                            <img src="/Taviyani_Logo.png" height="18px"> {{ $flashmessage->message }} <img src="/Taviyani_Logo.png" height="18px">
                         </span>
                     </div>
                 </div>
