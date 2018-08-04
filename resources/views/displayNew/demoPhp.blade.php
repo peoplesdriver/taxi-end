@@ -75,17 +75,18 @@
     <div id="app">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
-                    <h4 class="title"><?php echo date('F') ?> - {{ $title }} - <span id="todaysDate"></span></h4>
+                <div class="col-2">
+                    {{-- Add Span Letter --}}
+                    <h4 class="title"><?php echo date('F') ?> - {{ $title }}</h4>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="marquee">
                         <span class="dhivehi-font dhivehi-rtl">
                             <img src="/Taviyani_Logo.png" height="18px"> {{ $flashmessage->message }} <img src="/Taviyani_Logo.png" height="18px">
                         </span>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="buttons">
                         <a href="{{ url()->current() }}" class="btn btn-info btn-sm">All</a>
                         <a href="{{ url()->current() }}?status=paid"  class="btn btn-success btn-sm">Paid</a>
@@ -333,7 +334,7 @@
             document.getElementById("todaysDate").innerHTML = str;
         }
 
-        setInterval(updateDate, 1000);
+        // setInterval(updateDate, 1000);
         updateDate();
     </script>
 </body>
