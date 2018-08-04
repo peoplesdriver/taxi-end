@@ -26,7 +26,7 @@ use mikehaertl\pdftk\Pdf;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
     $flashmessage = Flashmessage::find(1);
 
     $students = \App\DrivingS::latest()->take(5)->get();
@@ -37,7 +37,16 @@ Route::get('/', function () {
     // $taxiPayments = \App\paymentHistory::getTotalPrice('3', '2018');
     // dd($taxiPayments);
 
-    return view('home', compact('flashmessage', 'students', 'payments'));
+    if ($request->taxiNo) {
+        $taxi = Taxi::where('taxiNo', $request->taxiNo)->where('active', '1')->first();
+        $quick_payments = $taxi->payment;
+    } else {
+        $quick_payments = [];
+    }
+    
+    // return $quick_payments;
+    // return $taxi;
+    return view('home', compact('flashmessage', 'students', 'payments', 'quick_payments'));
 })->middleware('auth');
 
 Route::get('/privacy-policy', function () {
