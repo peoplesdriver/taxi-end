@@ -534,7 +534,7 @@
             options: {
                 title: {
                     display: true,
-                    text: 'Estimate vs Real earnings for 2018'
+                    text: 'Estimate vs Real earnings (Taxi fee) for 2018'
                 }
             }
         })
