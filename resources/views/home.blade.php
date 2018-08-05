@@ -179,7 +179,7 @@
                                 <tr>   
                                     <td>{{ $payment->taxi->callcode->taxicenter->name }} - {{ $payment->taxi->callcode->callCode }} ( {{ $payment->taxi->taxiNo }} )</td>
                                     <td>TPL/{{ $payment->updated_at->format("Y") }}/{{ $payment->updated_at->format("m") }}/{{ $payment->id }}</td>
-                                    <td>{{ $payment->taxi->rate + $payment->taxi->subtotal }}</td>
+                                    <td>{{ $payment->totalAmount }}</td>
                                     <td>{{ $payment->taxi->driver->driverName  }}</td>
                                     <td>{{ getMonthName($payment->month) . ' ' . $payment->year }}</td>
                                     <td>
