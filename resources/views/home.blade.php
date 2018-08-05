@@ -45,7 +45,7 @@
         </div>
     </div>
 </div>
-@role('super-admin|admin')
+@role('super-admin|admin|officer')
 <div class="container">
     <div class="row">
         <div class="col-md-12">
