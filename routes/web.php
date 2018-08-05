@@ -404,7 +404,7 @@ Route::get('/display/{center_name}/three', function ($center_name) {
                     ->orderBy('cc')
                     ->get();
     $center = \App\TaxiCenter::find($taxis[0]->callcode->center_id);
-    $title = $center->name.' - '.$center->telephone;
+    $title = $center->name;
 
     function checkThreeMonths($id) {
         $now = Carbon::now();
