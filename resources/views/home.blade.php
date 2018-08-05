@@ -34,7 +34,7 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="message">Flash Message:</label>
-                            <input type="text" class="form-control" id="message" name="message"
+                            <input type="text" class="form-control dhivehi-font dhivehi-rtl" id="message" name="message"
                             @if ($flashmessage)
                                 value="{{ $flashmessage->message }}"
                             @endif
