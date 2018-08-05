@@ -255,4 +255,10 @@ Route::group(['prefix' => 'v2'], function () {
             return $news;
         });
     });
+
+    Route::group(['prefix' => 'taxiNo'], function () {
+        Route::get('/all', function () {
+            return Taxi::where('taxiNo', '!=', '-')->where('active', '1')->pluck('taxiNo');
+        });
+    });
 });          

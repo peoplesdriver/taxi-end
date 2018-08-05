@@ -4,6 +4,7 @@
 <ul class="breadcrumb">
     <li><a href="{{ url('home') }}">Home</a></li>
     <li class="active">SMS</li>
+    
 </ul>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">

@@ -39,7 +39,11 @@ Route::get('/', function (Request $request) {
 
     if ($request->taxiNo) {
         $taxi = Taxi::where('taxiNo', $request->taxiNo)->where('active', '1')->first();
-        $quick_payments = $taxi->payment;
+        if ($taxi) {
+            $quick_payments = $taxi->payment;
+        } else {
+            $quick_payments = [];    
+        }
     } else {
         $quick_payments = [];
     }

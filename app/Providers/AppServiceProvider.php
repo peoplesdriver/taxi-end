@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        View::composer('layouts.app', function ($view) {
+        View::composer('partials.header', function ($view) {
             $taxi_centers = \App\TaxiCenter::all();
             $view->with('taxi_centers', $taxi_centers);
         });

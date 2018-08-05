@@ -5,7 +5,7 @@
     }
 ?>
 
-@extends('layouts.app')
+@extends('layouts.app-home')
 
 @section('content')
 <div class="container">
@@ -22,6 +22,9 @@
                     Welcome To Taviyani Admin Portal
                 </div>
                 <div class="panel-body" style="font-size: 15px;">
+                    @if (Request::is('/'))
+                        your home
+                    @endif
                     <p>You are logged in <strong>{{ Auth::user()->name }}</strong>!. Your Role is {{ Auth::user()->getRoleNames() }}</p>
                     <p><div id="todaysDate"></div></p>
                     <p>-Taviyani-</p>
@@ -46,204 +49,221 @@
     </div>
 </div>
 @role('super-admin|admin|officer')
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Quick Pay
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form class="form-inline" method="GET" style="width: 100%">
-                                <label class="sr-only" for="taxiNo">Taxi No: </label>
-                                <input type="text" class="form-control mb-2 mr-sm-2" id="taxiNo" name="taxiNo" placeholder="Enter taxi no"
-                                @if (request()->taxiNo)
-                                    value="{{ request()->taxiNo }}"
-                                @endif
-                                >
-                                <button type="submit" class="btn btn-primary mb-2">Search</button>
-                            </form>
-                        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Quick Pay
                     </div>
-                    <br>
-                    <table id="payments" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Call Code</th>
-                                <th>Driver Name</th>
-                                <th>Taxi Number</th>
-                                <th>Center Name</th>
-                                <th>Slip Number</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Recive Payment</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($quick_payments as $payment)
-                                <tr>   
-                                    <td>{{ $payment->taxi->callcode->callCode }}</td>
-                                    @if (is_null($payment->taxi->driver))
-                                        <td>No Driver Assigned</td>
-                                    @else
-                                        <td>{{ $payment->taxi->driver->driverName  }}</td>
-                                    @endif
-                                    <td>{{ $payment->taxi->taxiNo }}</td>
-                                    <td>{{ $payment->taxi->callcode->taxicenter->name }}</td>
-                                    <td>TPL/{{ $payment->year }}/{{ $payment->month }}/{{ $payment->id }}</td>
-                                    <td>{{ getMonthName($payment->month) . ' ' . $payment->year }}</td>
-                                    <td>
-                                        @if ($payment->paymentStatus == "0")
-                                            <button id="status" style="display: block; margin: auto;"  class="btn-danger" disabled>Not Paid</button>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form class="form-inline" method="GET" style="width: 100%" autocomplete="off">
+                                    <div class="form-group">
+                                        <input type="text" class="typeahead form-control mb-2 mr-sm-2" id="taxiNo" name="taxiNo" placeholder="Enter taxi no" autocomplete="off" data-provide="typeahead"
+                                            @if (request()->taxiNo)
+                                            value="{{ request()->taxiNo }}"
                                         @endif
-                                        @if ($payment->paymentStatus == "1")
-                                            <button id="status" style="display: block; margin: auto;"  class="btn-success" disabled>Paid</button>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($payment->paymentStatus == "0")
-                                            <button style="display: block; margin: auto;" class="btn btn-info" data-toggle="modal" data-target="#paymentModal" onclick="c_payment('{{ $payment->id }}')">Recive Payment</button>
-                                        @endif
-                                        @if ($payment->paymentStatus == "1")
-                                            <a href="{{ url()->current() }}/receipt/{{ $payment->id }}" style="display: block; margin: auto;" class="btn btn-info">View</a>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Last Joined Student
-                </div>
-                <div class="panel-body" style="font-size: 15px;">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>                            
-                                <th>Name</th>
-                                <th>ID Card</th>
-                                <th>Phone</th>
-                                <th>Category</th>
-                                <th>Instructor</th>
-                                <th>Remarks</th>
-                                <th>Driving Test</th>
-                                <th>Theory Test</th>
-                                <th>Joined on</th>
-                                <th>Registered By</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($students as $student)
+                                        >
+                                        <button type="submit" class="btn btn-primary mb-2">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <br>
+                        <table id="payments" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
                                 <tr>
-                                    <td class="verticalAlign">{{ $student->name }}</th>
-                                    <td class="verticalAlign">{{ $student->id_card }}</td>
-                                    <td class="verticalAlign">{{ $student->phone }}</td>
-                                    <td class="verticalAlign">{{ $student->category }}</td>
-                                    <td class="verticalAlign">{{ $student->instructor }}</td>
-                                    <td class="verticalAlign">{{ $student->remarks }}</td>
-                                    <td class="verticalAlign">{{ $student->finisheddate }}</td>
-                                    <td class="verticalAlign">{{ $student->theorydate }}</td>
-                                    <td class="verticalAlign">{{ $student->created_at->toFormattedDateString() }}</td>
-                                    <td class="verticalAlign">{{ $student->user->name }}</td>
+                                    <th>Call Code</th>
+                                    <th>Driver Name</th>
+                                    <th>Taxi Number</th>
+                                    <th>Center Name</th>
+                                    <th>Slip Number</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Recive Payment</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Last paid taxi fee
-                </div>
-                <div class="panel-body" style="font-size: 15px;">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Center Name - Call Code ( Taxi No )</th>
-                                <th>Slip Number</th>
-                                <th>Taxi Fee</th>
-                                <th>Driver Name</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Paid Date and Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($payments as $payment)
-                                <tr>   
-                                    <td>{{ $payment->taxi->callcode->taxicenter->name }} - {{ $payment->taxi->callcode->callCode }} ( {{ $payment->taxi->taxiNo }} )</td>
-                                    <td>TPL/{{ $payment->updated_at->format("Y") }}/{{ $payment->updated_at->format("m") }}/{{ $payment->id }}</td>
-                                    <td>{{ $payment->totalAmount }}</td>
-                                    <td>{{ $payment->taxi->driver->driverName  }}</td>
-                                    <td>{{ getMonthName($payment->month) . ' ' . $payment->year }}</td>
-                                    <td>
-                                        @if ($payment->paymentStatus == "0")
-                                            <button id="status" style="display: block; margin: auto;"  class="btn-danger" disabled>Not Paid</button>
+                            </thead>
+                            <tbody>
+                                @foreach($quick_payments as $payment)
+                                    <tr>   
+                                        <td>{{ $payment->taxi->callcode->callCode }}</td>
+                                        @if (is_null($payment->taxi->driver))
+                                            <td>No Driver Assigned</td>
+                                        @else
+                                            <td>{{ $payment->taxi->driver->driverName  }}</td>
                                         @endif
-                                        @if ($payment->paymentStatus == "1")
-                                            <button id="status" style="display: block; margin: auto;"  class="btn-success" disabled>Paid</button>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        {{ $payment->updated_at->format('d/m/Y h:i:s a') }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Earnings Summary
-                </div>
-                <div class="panel-body" style="font-size: 15px;">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Month</th>
-                                <th>Taxi Fee</th>
-                                <th>Driving School</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for ($i = 1; $i < 13; $i++)
-                                <tr>
-                                    <td>{{ Carbon\Carbon::createFromFormat('m', $i)->format('F') }}</td>
-                                    <td>
-                                        <?php
-                                            echo "MVR " . \App\paymentHistory::getTotalPrice($i, '2018');
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                            echo "MVR " . \App\DrivingS::getTotalPrice($i, '2018');
-                                        ?>
-                                    </td>
-                                </tr>
-                            @endfor
-                        </tbody>
-                    </table>
-
-                    <hr>
-
-                    <canvas id="myChart" width="400" height="400"></canvas>
-
+                                        <td>{{ $payment->taxi->taxiNo }}</td>
+                                        <td>{{ $payment->taxi->callcode->taxicenter->name }}</td>
+                                        <td>TPL/{{ $payment->year }}/{{ $payment->month }}/{{ $payment->id }}</td>
+                                        <td>{{ getMonthName($payment->month) . ' ' . $payment->year }}</td>
+                                        <td>
+                                            @if ($payment->paymentStatus == "0")
+                                                <button id="status" style="display: block; margin: auto;"  class="btn-danger" disabled>Not Paid</button>
+                                            @endif
+                                            @if ($payment->paymentStatus == "1")
+                                                <button id="status" style="display: block; margin: auto;"  class="btn-success" disabled>Paid</button>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($payment->paymentStatus == "0")
+                                                <button style="display: block; margin: auto;" class="btn btn-info" data-toggle="modal" data-target="#paymentModal" onclick="c_payment('{{ $payment->id }}')">Recive Payment</button>
+                                            @endif
+                                            @if ($payment->paymentStatus == "1")
+                                                <a href="{{ url()->current() }}/receipt/{{ $payment->id }}" style="display: block; margin: auto;" class="btn btn-info">View</a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+@endrole
+@role('super-admin|admin')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Last Joined Student
+                    </div>
+                    <div class="panel-body" style="font-size: 15px;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>                            
+                                    <th>Name</th>
+                                    <th>ID Card</th>
+                                    <th>Phone</th>
+                                    <th>Category</th>
+                                    <th>Instructor</th>
+                                    <th>Remarks</th>
+                                    <th>Driving Test</th>
+                                    <th>Theory Test</th>
+                                    <th>Joined on</th>
+                                    <th>Registered By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($students as $student)
+                                    <tr>
+                                        <td class="verticalAlign">{{ $student->name }}</th>
+                                        <td class="verticalAlign">{{ $student->id_card }}</td>
+                                        <td class="verticalAlign">{{ $student->phone }}</td>
+                                        <td class="verticalAlign">{{ $student->category }}</td>
+                                        <td class="verticalAlign">{{ $student->instructor }}</td>
+                                        <td class="verticalAlign">{{ $student->remarks }}</td>
+                                        <td class="verticalAlign">{{ $student->finisheddate }}</td>
+                                        <td class="verticalAlign">{{ $student->theorydate }}</td>
+                                        <td class="verticalAlign">{{ $student->created_at->toFormattedDateString() }}</td>
+                                        <td class="verticalAlign">{{ $student->user->name }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Last paid taxi fee
+                    </div>
+                    <div class="panel-body" style="font-size: 15px;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Center Name - Call Code ( Taxi No )</th>
+                                    <th>Slip Number</th>
+                                    <th>Taxi Fee</th>
+                                    <th>Driver Name</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Paid Date and Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($payments as $payment)
+                                    <tr>   
+                                        <td>{{ $payment->taxi->callcode->taxicenter->name }} - {{ $payment->taxi->callcode->callCode }} ( {{ $payment->taxi->taxiNo }} )</td>
+                                        <td>TPL/{{ $payment->updated_at->format("Y") }}/{{ $payment->updated_at->format("m") }}/{{ $payment->id }}</td>
+                                        <td>{{ $payment->totalAmount }}</td>
+                                        <td>{{ $payment->taxi->driver->driverName  }}</td>
+                                        <td>{{ getMonthName($payment->month) . ' ' . $payment->year }}</td>
+                                        <td>
+                                            @if ($payment->paymentStatus == "0")
+                                                <button id="status" style="display: block; margin: auto;"  class="btn-danger" disabled>Not Paid</button>
+                                            @endif
+                                            @if ($payment->paymentStatus == "1")
+                                                <button id="status" style="display: block; margin: auto;"  class="btn-success" disabled>Paid</button>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $payment->updated_at->format('d/m/Y h:i:s a') }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="panel-title pull-left">
+                            Earnings Summary
+                        </div>
+                        <div class="panel-title pull-right">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1">
+                                <label class="form-check-label" for="inlineCheckbox1">Show Table</label>
+                            </div>    
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body" style="font-size: 15px;">
+                        <div id="hideMe" style="display: none;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Taxi Fee</th>
+                                        <th>Driving School</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for ($i = 1; $i < 13; $i++)
+                                        <tr>
+                                            <td>{{ Carbon\Carbon::createFromFormat('m', $i)->format('F') }}</td>
+                                            <td>
+                                                <?php
+                                                    echo "MVR " . \App\paymentHistory::getTotalPrice($i, '2018');
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                    echo "MVR " . \App\DrivingS::getTotalPrice($i, '2018');
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    @endfor
+                                </tbody>
+                            </table>
+                            <hr>
+                        </div>
+
+                        <canvas id="myChart"></canvas>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endrole
 
 <input type="hidden" name="hidden_view" id="hidden_view" value="{{ url('payments/taxi-payment/view') }}">
@@ -332,18 +352,6 @@
 
 @endsection
 
-<?php
-
-$dataPoints = array();
-for ($i = 1; $i < 13; $i++) {
-    array_push($dataPoints, array(
-        "label" => Carbon\Carbon::createFromFormat('m', $i)->format('F'),
-        "price" => \App\paymentHistory::getTotalPrice($i, '2018'),
-    ));
-}
-// dd(json_encode($dataPoints));
-?>
-
 @section('js')
     <script>
         function addZero(i) {
@@ -369,38 +377,10 @@ for ($i = 1; $i < 13; $i++) {
         setInterval(updateDate, 1000);
         updateDate();
     </script>
-
-    <script>
-        var jsonfile = {
-            "jsonarray": <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-        }
-        var labels = jsonfile.jsonarray.map(function(e) {
-            return e.label;
-        });
-        var data = jsonfile.jsonarray.map(function(e) {
-            return e.price;
-        });
-        console.log(jsonfile);
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Earnings',
-                    data: data,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                    ]
-                }]
-            }
-        });
-    </script>
-
     <script>
         var totalValue = 0;
 
-        function c_payment(id){
+        function c_payment(id) {
             var view_url = $("#hidden_view").val();
             $.ajax({
                 url: view_url,
@@ -445,5 +425,109 @@ for ($i = 1; $i < 13; $i++) {
             });
         }
     </script>
+
+    <script>
     
+    var taxiNos = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: '/api/v2/taxiNo/all'
+    });
+
+    console.log(taxiNos);
+
+    $(document).ready(function(){
+        $('.typeahead').typeahead(null, {
+            source: taxiNos,
+            minLength: 1
+        });
+    });
+
+    </script>
+    <?php
+        $taxiData = array();
+        $drivingData = array();
+        for ($i = 1; $i < 13; $i++) {
+            $month = Carbon\Carbon::createFromFormat('m', $i)->format('F');
+            array_push($taxiData, array(
+                "label" => $month,
+                "price" => \App\paymentHistory::getTotalPrice($i, '2018'),
+                "color" => 'rgba(255, 71, 87,0.2)'
+            ));
+            array_push($drivingData, array(
+                "label" => $month,
+                "price" => \App\DrivingS::getTotalPrice($i, '2018'),
+                "color" => 'rgba(112, 161, 255,0.2)'
+            ));
+        }
+
+    ?>
+
+    <script>
+        var jsonfile = {
+            "taxiData": {!! json_encode($taxiData, JSON_NUMERIC_CHECK) !!},
+            "drivingData": {!! json_encode($drivingData, JSON_NUMERIC_CHECK) !!}
+        }
+        var labels_taxi = jsonfile.taxiData.map(function(e) {
+            return e.label;
+        });
+        var data_taxi = jsonfile.taxiData.map(function(e) {
+            return e.price;
+        });
+        var data_driving = jsonfile.drivingData.map(function(e) {
+            return e.price;
+        });
+        var data_color_taxi = jsonfile.taxiData.map(function(e) {
+            return e.color;
+        });
+        var data_color_driving = jsonfile.drivingData.map(function(e) {
+            return e.color;
+        });
+        console.log(jsonfile);
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            responsive: true,
+            data: {
+                labels: labels_taxi,
+                datasets: [{
+                    label: 'Taxi Fees',
+                    data: data_taxi,
+                    backgroundColor: data_color_taxi,
+                }, {
+                    label: 'Driving School',
+                    data: data_driving,
+                    backgroundColor: data_color_driving,
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Earnigs report for 2018'
+                }
+            }
+        });
+
+        $(function () {
+            $("#inlineCheckbox1").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#hideMe").show();
+                } else {
+                    $("#hideMe").hide();
+                }
+            });
+        });
+    </script>
+@endsection
+
+@section('css')
+
+<style>
+    .form-inline .twitter-typeahead {
+        width: auto;
+        float: none;
+        vertical-align: middle;
+    }
+</style>
+
 @endsection

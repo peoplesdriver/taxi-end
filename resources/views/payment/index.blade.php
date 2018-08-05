@@ -12,6 +12,7 @@ function getMonthName($monthNumber)
     <li><a href="{{ url('home') }}">Home</a></li>
     <li><a href="#">Payment</a></li>
     <li class="active">Taxi Payments</li>
+
 </ul>
 
 <div class="panel panel-primary">
@@ -21,6 +22,9 @@ function getMonthName($monthNumber)
     <div class="panel-body">
         <div class="row">            
             <div class="col-md-12">
+                @if (Request::is('/'))
+                    your home
+                @endif
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
