@@ -55,17 +55,17 @@
                 </div>
                 <div class="panel-body">
                     <div class="">
-                        <form method="GET">
-                            <label>Taxi No:</label>
-                            <input type="text" name="taxiNo"
+                        <form class="form-inline" method="GET">
+                            <label class="sr-only" for="taxiNo">Taxi No:</label>
+                            <input type="text" class="form-control mb-2 mr-sm-2" id="taxiNo" name="taxiNo" placeholder="Enter taxi no"
                             @if (request()->taxiNo)
                                 value="{{ request()->taxiNo }}"
                             @endif
                             >
+                            <button type="submit" class="btn btn-primary mb-2">Submit</button>
                         </form>
                     </div>
                     <br>
-                    
                     <table id="payments" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
