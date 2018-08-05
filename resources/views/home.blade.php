@@ -54,16 +54,18 @@
                     Quick Pay
                 </div>
                 <div class="panel-body">
-                    <div class="">
-                        <form class="form-inline" method="GET">
-                            <label class="sr-only" for="taxiNo">Taxi No: </label>
-                            <input type="text" class="form-control mb-2 mr-sm-2" id="taxiNo" name="taxiNo" placeholder="Enter taxi no"
-                            @if (request()->taxiNo)
-                                value="{{ request()->taxiNo }}"
-                            @endif
-                            >
-                            <button type="submit" class="btn btn-primary mb-2">Search</button>
-                        </form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-inline" method="GET" style="width: 100%">
+                                <label class="sr-only" for="taxiNo">Taxi No: </label>
+                                <input type="text" class="form-control mb-2 mr-sm-2" id="taxiNo" name="taxiNo" placeholder="Enter taxi no"
+                                @if (request()->taxiNo)
+                                    value="{{ request()->taxiNo }}"
+                                @endif
+                                >
+                                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                            </form>
+                        </div>
                     </div>
                     <br>
                     <table id="payments" class="table table-striped table-bordered" cellspacing="0" width="100%">
