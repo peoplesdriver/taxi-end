@@ -56,13 +56,13 @@
                 <div class="panel-body">
                     <div class="">
                         <form class="form-inline" method="GET">
-                            <label class="sr-only" for="taxiNo">Taxi No:</label>
+                            <label class="sr-only" for="taxiNo">Taxi No: </label>
                             <input type="text" class="form-control mb-2 mr-sm-2" id="taxiNo" name="taxiNo" placeholder="Enter taxi no"
                             @if (request()->taxiNo)
                                 value="{{ request()->taxiNo }}"
                             @endif
                             >
-                            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                            <button type="submit" class="btn btn-primary mb-2">Search</button>
                         </form>
                     </div>
                     <br>
