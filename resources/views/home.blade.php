@@ -258,7 +258,8 @@
                         </div>
 
                         <canvas id="myChart"></canvas>
-
+                        <hr>
+                        <canvas id="line"></canvas>
                     </div>
                 </div>
             </div>
@@ -452,6 +453,7 @@
             array_push($taxiData, array(
                 "label" => $month,
                 "price" => \App\paymentHistory::getTotalPrice($i, '2018'),
+                "est" => \App\paymentHistory::getTotalEstPrice($i, '2018'),
                 "color" => 'rgba(255, 71, 87,0.2)'
             ));
             array_push($drivingData, array(
@@ -473,6 +475,9 @@
         });
         var data_taxi = jsonfile.taxiData.map(function(e) {
             return e.price;
+        });
+        var data_taxi_est = jsonfile.taxiData.map(function(e) {
+            return e.est;
         });
         var data_driving = jsonfile.drivingData.map(function(e) {
             return e.price;
@@ -507,6 +512,32 @@
                 }
             }
         });
+
+        var line = document.getElementById("line").getContext('2d');
+        var lineChart = new Chart(line, {
+            type: 'line',
+            responsive: true,
+            data: {
+                labels: labels_taxi,
+                datasets: [{
+                    label: 'Taxi Fees Recived',
+                    data: data_taxi,
+                    borderColor: data_color_taxi,
+                    fill: false
+                }, {
+                    label: 'Estimated Earnings',
+                    data: data_taxi_est,
+                    borderColor: data_color_driving,
+                    fill: false
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Estimate vs Real earnings for 2018'
+                }
+            }
+        })
 
         $(function () {
             $("#inlineCheckbox1").click(function () {

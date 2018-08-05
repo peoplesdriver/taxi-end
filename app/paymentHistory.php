@@ -24,5 +24,10 @@ class paymentHistory extends Model
     public function scopeGetTotalPrice($query, $month, $year) {
         return $query->where('month', $month)->where('year', $year)->sum('totalAmount');
     }
+
+    public function scopeGetTotalEstPrice($query, $month, $year) {
+        $q = $query->where('month', $month)->where('year', $year)->count();
+        return $q === null ? 0 : ($q * 600);
+    }
     
 }

@@ -34,8 +34,8 @@ Route::get('/', function (Request $request) {
 
     $now = Carbon::now();
 
-    // $taxiPayments = \App\paymentHistory::getTotalPrice('3', '2018');
-    // dd($taxiPayments);
+    // $taxiPayments = \App\paymentHistory::getTotalEstPrice('7', '2018');
+    // return $taxiPayments;
 
     if ($request->taxiNo) {
         $taxi = Taxi::where('taxiNo', $request->taxiNo)->where('active', '1')->first();
