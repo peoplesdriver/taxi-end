@@ -14,7 +14,6 @@ use App\Exports\PaymentExport;
 use Illuminate\Support\Facades\Hash;
 use mikehaertl\pdftk\Pdf;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,7 +41,7 @@ Route::get('/', function (Request $request) {
         if ($taxi) {
             $quick_payments = $taxi->payment;
         } else {
-            $quick_payments = [];    
+            $quick_payments = [];
         }
     } else {
         $quick_payments = [];
@@ -88,7 +87,6 @@ Route::group(['prefix' => 'test', 'middleware' => ['role:super-admin']], functio
             echo htmlentities('</th>');
             echo '<br>';
         }
-
     });
     Route::get('sql-gen', function () {
         $id = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130'];
@@ -111,7 +109,6 @@ Route::group(['prefix' => 'test', 'middleware' => ['role:super-admin']], functio
             echo "(".$id[$i].", '".$id[$i]."', '".$taxi[$i]."', ".$null.", ".$null.", ".$null.", ".$null.", ".$null.", '".$driver[$i]."', ".$null.", ".$null.", '".$address[$i]."', '".$date[$i]."', '".$date[$i]."', '".$date[$i]."', '".$date[$i]."', '".$rate."', '".$zero."', '".$up_date."', '".$up_date."', ".$null.", '".$lfo."', '".$lbo."', '".$lft."', '".$lbt."', '".$cccode."', '".$zero."'),";
             echo '<br>';
         }
-
     });
     Route::get('callCode-gen', function () {
         $up_date = '2017-12-31 11:06:41';
@@ -167,10 +164,7 @@ Route::get('payment-generation', function () {
     if ($payments) {
         $info = array('status' => 'payment already generated for this month');
         return response()->json([$info]);
-    }
-
-    else
-    {
+    } else {
         $taxis = App\Taxi::all();
         foreach ($taxis as $taxi) {
             App\paymentHistory::create([
@@ -179,12 +173,11 @@ Route::get('payment-generation', function () {
                 'year' => date("Y"),
                 'desc' => "Monthly Taxi Fee",
             ]);
-
         }
 
         $taxiUp = App\Taxi::where('state', '1')->update(['state' => 0]);
 
-        return redirect()->route('payment')->with('success','Payment Generated Successfully.');
+        return redirect()->route('payment')->with('success', 'Payment Generated Successfully.');
     }
 })->middleware('auth');
 Route::get('/test-driver', function () {
@@ -199,7 +192,7 @@ Route::get('/test-driver', function () {
         echo 'Driver Mobile: '.$driver->driverMobile;
         echo '<hr>';
     }
-    if($drivers->isEmpty()){
+    if ($drivers->isEmpty()) {
         echo 'All the added drivers has a taxi';
     }
 })->middleware('auth');
@@ -214,7 +207,7 @@ Route::get('/test-taxi', function () {
         echo 'CallCode: '.$taxi->callcode->callCode;
         echo '<hr>';
     }
-    if($taxis->isEmpty()){
+    if ($taxis->isEmpty()) {
         echo 'All the added taxis has a driver';
     }
 })->middleware('auth');
@@ -237,7 +230,7 @@ Route::get('/taxi-callcode', function () {
 Route::get('/test-driving-school', function () {
     $students = \App\DrivingS::all();
     foreach ($students as $student) {
-        $student->month = $student->created_at->format('m'); 
+        $student->month = $student->created_at->format('m');
         $student->year = $student->created_at->format('Y');
         $student->save();
         echo $student->created_at->format('m');
@@ -382,7 +375,7 @@ Route::get('/display/{center_name}', function ($center_name) {
 
     foreach ($taxis as $key => $taxi) {
         if (!is_null($taxi->driver)) {
-            if ($taxi->driver->driverName == '-'){
+            if ($taxi->driver->driverName == '-') {
                 $taxis->pull($key);
             }
         } else {
@@ -406,7 +399,8 @@ Route::get('/display/{center_name}/three', function ($center_name) {
     $center = \App\TaxiCenter::find($taxis[0]->callcode->center_id);
     $title = $center->name;
 
-    function checkThreeMonths($id) {
+    function checkThreeMonths($id)
+    {
         $now = Carbon::now();
         // Current Month
         $day = $now->format('d');
@@ -455,7 +449,7 @@ Route::get('/display/{center_name}/three', function ($center_name) {
             
     foreach ($taxis as $key => $taxi) {
         if (!is_null($taxi->driver)) {
-            if ($taxi->driver->driverName == '-'){
+            if ($taxi->driver->driverName == '-') {
                 $taxis->pull($key);
             }
         } else {
@@ -482,7 +476,7 @@ Route::get('api/display/{center_name}', function ($center_name) {
     
     foreach ($taxis as $key => $taxi) {
         if (!is_null($taxi->driver)) {
-            if ($taxi->driver->driverName == '-'){
+            if ($taxi->driver->driverName == '-') {
                 $taxis->pull($key);
             }
         } else {
@@ -493,14 +487,14 @@ Route::get('api/display/{center_name}', function ($center_name) {
     return $taxis;
 })->middleware('auth');
 
-Route::get('display/{center_name}/vue', function($center_name){
+Route::get('display/{center_name}/vue', function ($center_name) {
     $center = \App\TaxiCenter::where('cCode', $center_name)->first();
     // return $center;
     $title = $center->name.' - '.$center->telephone;
     return view('displayNew.demoVue', compact('center_name', 'title'));
 });
 
-Route::get('/api/driver', function(Request $request) {
+Route::get('/api/driver', function (Request $request) {
     $driver = \App\Driver::with('taxi')->find($request->id);
     $driver->paymentStatus = '<h4>Paid</h4>';
     return $driver;
@@ -539,7 +533,7 @@ Route::group(['prefix' => 'report', 'middleware' => ['role:super-admin|admin']],
         return view('report.taxi.index', compact('taxis'));
     });
     Route::get('/payment-history', function (Request $request) {
-        if(request()->exists('to') AND request()->exists('from')) {
+        if (request()->exists('to') and request()->exists('from')) {
             $to = $request->input('to');
             $from = $request->input('from');
             $paids = \App\paymentHistory::where('paymentStatus', '1')
@@ -563,7 +557,8 @@ Route::group(['prefix' => 'report', 'middleware' => ['role:super-admin|admin']],
                         ->orderBy('cc')
                         ->get();
 
-        function checkThreeMonths($id) {
+        function checkThreeMonths($id)
+        {
             $now = Carbon::now();
             // Current Month
             $day = $now->format('d');
@@ -612,7 +607,7 @@ Route::group(['prefix' => 'report', 'middleware' => ['role:super-admin|admin']],
                 
         foreach ($taxis as $key => $taxi) {
             if (!is_null($taxi->driver)) {
-                if ($taxi->driver->driverName == '-'){
+                if ($taxi->driver->driverName == '-') {
                     $taxis->pull($key);
                 }
             } else {
@@ -627,7 +622,7 @@ Route::group(['prefix' => 'report', 'middleware' => ['role:super-admin|admin']],
     });
 
     Route::get('/driving-school', function (Request $request) {
-        if(request()->exists('to') AND request()->exists('from')) {
+        if (request()->exists('to') and request()->exists('from')) {
             $to = $request->input('to');
             $from = $request->input('from');
             $students = \App\DrivingS::whereBetween('created_at', array($from, $to))
@@ -766,7 +761,7 @@ Route::group(['prefix' => 'image-upload', 'middleware' => ['role:super-admin|adm
 
 // Contatcts generation routes
 Route::group(['prefix' => 'contacts-generate', 'middleware' => ['role:super-admin']], function () {
-    Route::get('taxi', function() {
+    Route::get('taxi', function () {
         // Taxi
         $taxis = \App\Taxi::where('active', '1')->where('taxiOwnerMobile', '!=', '-')->pluck('taxiOwnerMobile')->toArray();
         $taxi_numbers = Helper::validate_numbers($taxis);
@@ -775,8 +770,7 @@ Route::group(['prefix' => 'contacts-generate', 'middleware' => ['role:super-admi
             $taxi_group = \App\Contact::create([
                 'group_name' => 'All Taxi Owners'
             ]);
-        }
-        else {
+        } else {
             $taxi_group = \App\Contact::where('group_name', 'All Taxi Owners')->first();
         }
 
@@ -792,11 +786,11 @@ Route::group(['prefix' => 'contacts-generate', 'middleware' => ['role:super-admi
                 'number' => $number,
                 'contact_id' => $taxi_group->id
             ]);
-        }        
+        }
 
         return redirect('contacts-generate/driver');
     });
-    Route::get('driver', function() {
+    Route::get('driver', function () {
         // Driver
         $drivers = \App\Driver::where('active', '1')->where('driverMobile', '!=', '-')->pluck('driverMobile')->toArray();
         $driver_numbers = Helper::validate_numbers($drivers);
@@ -805,8 +799,7 @@ Route::group(['prefix' => 'contacts-generate', 'middleware' => ['role:super-admi
             $driver_group = \App\Contact::create([
                 'group_name' => 'All Drivers'
             ]);
-        }
-        else {
+        } else {
             $driver_group = \App\Contact::where('group_name', 'All Drivers')->first();
         }
 
@@ -826,7 +819,7 @@ Route::group(['prefix' => 'contacts-generate', 'middleware' => ['role:super-admi
 
         return redirect('/');
     });
-    Route::get('students', function() {
+    Route::get('students', function () {
         // Students
         $students = \App\DrivingS::where('phone', '!=', '-')->pluck('phone')->toArray();
         $student_numbers = Helper::validate_numbers($students);
@@ -835,8 +828,7 @@ Route::group(['prefix' => 'contacts-generate', 'middleware' => ['role:super-admi
             $student_group = \App\Contact::create([
                 'group_name' => 'All Driving School Students'
             ]);
-        }
-        else {
+        } else {
             $student_group = \App\Contact::where('group_name', 'All Driving School Students')->first();
         }
 
@@ -856,7 +848,7 @@ Route::group(['prefix' => 'contacts-generate', 'middleware' => ['role:super-admi
 
         return $student_numbers;
     });
-    Route::get('server-time', function() {
+    Route::get('server-time', function () {
         $mytime = Carbon::now();
         echo $mytime->toDateTimeString();
     });
@@ -865,20 +857,20 @@ Route::group(['prefix' => 'contacts-generate', 'middleware' => ['role:super-admi
 
 // Quiz
 Route::group(['prefix' => 'theory', 'middleware' => ['role:super-admin|admin|officer|customer']], function () {
-    Route::get('/', function() {
-        $quiz = \App\Quiz::with(['questions' => function($query) {
+    Route::get('/', function () {
+        $quiz = \App\Quiz::with(['questions' => function ($query) {
             $query->orderByRaw('RAND()')->take(30);
         }])->findOrFail(1);
         $quiz->questions->random(30);
         return view('theory.index', compact('quiz'));
     });
 
-    Route::get('/all', function() {
+    Route::get('/all', function () {
         $quiz = \App\Quiz::with('questions')->findOrFail(1);
         return view('theory.index', compact('quiz'));
     });
     
-    Route::post('/post', function(Request $request) {
+    Route::post('/post', function (Request $request) {
         $quiz = \App\Quiz::with('questions')->findOrFail(1);
         $questions = $quiz->questions;
 
@@ -906,21 +898,21 @@ Route::group(['prefix' => 'theory', 'middleware' => ['role:super-admin|admin|off
         return view('theory.result', compact('score', 'total_score', 'questions', 'user_answers'));
     });
 
-    Route::get('/questions', function() {
+    Route::get('/questions', function () {
         $quiz = \App\Quiz::with('questions')->findOrFail(1);
         $questions = $quiz->questions;
         return view('theory.view', compact('questions'));
     });
 
-    Route::get('/add', function() {
+    Route::get('/add', function () {
         return view('theory.add');
     });
 
-    Route::get('/edit/{id}', function() {
+    Route::get('/edit/{id}', function () {
         return view('theory.add');
     });
 
-    Route::post('/add', function(Request $request) {
+    Route::post('/add', function (Request $request) {
         $question = App\Question::create([
             'quiz_id' => '1',
             'body' => $request->question
@@ -950,7 +942,7 @@ Route::group(['prefix' => 'theory', 'middleware' => ['role:super-admin|admin|off
             'is_correct' => '0'
         ]);
 
-        if($request->has('answerPhoto1')) {
+        if ($request->has('answerPhoto1')) {
             $image1 = $request->answerPhoto1;
             $image1_filename = $image1->getClientOriginalName();
             $image1_location = "theory/".$question->id."/".$answer1->id;
@@ -958,7 +950,7 @@ Route::group(['prefix' => 'theory', 'middleware' => ['role:super-admin|admin|off
             $answer1->save();
         }
 
-        if($request->has('answerPhoto2')) {
+        if ($request->has('answerPhoto2')) {
             $image2 = $request->answerPhoto2;
             $image2_filename = $image2->getClientOriginalName();
             $image2_location = "theory/".$question->id."/".$answer2->id;
@@ -966,7 +958,7 @@ Route::group(['prefix' => 'theory', 'middleware' => ['role:super-admin|admin|off
             $answer2->save();
         }
 
-        if($request->has('answerPhoto3')) {
+        if ($request->has('answerPhoto3')) {
             $image3 = $request->answerPhoto3;
             $image3_filename = $image3->getClientOriginalName();
             $image3_location = "theory/".$question->id."/".$answer3->id;
@@ -974,7 +966,7 @@ Route::group(['prefix' => 'theory', 'middleware' => ['role:super-admin|admin|off
             $answer3->save();
         }
 
-        if($request->has('answerPhoto4')) {
+        if ($request->has('answerPhoto4')) {
             $image4 = $request->answerPhoto4;
             $image4_filename = $image4->getClientOriginalName();
             $image4_location = "theory/".$question->id."/".$answer4->id;
@@ -982,15 +974,15 @@ Route::group(['prefix' => 'theory', 'middleware' => ['role:super-admin|admin|off
             $answer4->save();
         }
 
-        return redirect()->back()->with('alert-success','Question added');
+        return redirect()->back()->with('alert-success', 'Question added');
     });
 
-    Route::get('/result', function(){
+    Route::get('/result', function () {
         return view('theory.result');
     });
 });
 
-Route::get('/encrypt/{string}', function($string) {
+Route::get('/encrypt/{string}', function ($string) {
     $encrypted = Crypt::encrypt($string);
     try {
         $decrypted = decrypt($encrypted);
@@ -1000,7 +992,7 @@ Route::get('/encrypt/{string}', function($string) {
     }
 });
 
-Route::get('new-payment-generation', function() {
+Route::get('new-payment-generation', function () {
     $now = Carbon::now();
     // dd($now);
     $next_month = $now->addMonth();
@@ -1009,7 +1001,7 @@ Route::get('new-payment-generation', function() {
 
     foreach ($taxis as $key => $taxi) {
         if (!is_null($taxi->driver)) {
-            if ($taxi->driver->driverName == '-'){
+            if ($taxi->driver->driverName == '-') {
                 $taxis->pull($key);
             }
         } else {
@@ -1020,9 +1012,10 @@ Route::get('new-payment-generation', function() {
     // return $taxis;
     // dd($next_month->month);
 
-    function checkPaymentGeneration($month, $year) {
+    function checkPaymentGeneration($month, $year)
+    {
         $payments = paymentHistory::where('month', $month)->where('year', $year)->first();
-        if ($payments){
+        if ($payments) {
             return true;
         } else {
             return false;
@@ -1032,7 +1025,8 @@ Route::get('new-payment-generation', function() {
     // dd(checkPaymentGeneration($now->month, $now->year));
     // dd(checkPaymentGeneration($next_month->month, $next_month->year));
 
-    function generatePayment($id, $month, $year) {
+    function generatePayment($id, $month, $year)
+    {
         App\paymentHistory::create([
             'taxi_id' => $id,
             'month' => $month,
@@ -1044,9 +1038,7 @@ Route::get('new-payment-generation', function() {
 
     if ($day < 25) {
         if (checkPaymentGeneration($now->month, $now->year)) {
-            
             return 'Payment Already generated for this month.';
-
         } else {
             echo 'Generating payment for this month. <br>';
             $now = Carbon::now();
@@ -1059,15 +1051,11 @@ Route::get('new-payment-generation', function() {
         }
 
         return 'Before 25th';
-    }
-    elseif ($day == 25 or $day > 25) {
+    } elseif ($day == 25 or $day > 25) {
         $now = Carbon::now();
         if (checkPaymentGeneration($now->month, $now->year)) {
-
             if (checkPaymentGeneration($next_month->month, $next_month->year)) {
-
                 return 'Payment generated for this and the next month.';
-
             } else {
                 echo 'Payment already generated for this month, generating payment for next month. <br>';
                 foreach ($taxis as $taxi) {
@@ -1077,7 +1065,6 @@ Route::get('new-payment-generation', function() {
 
                 return 'Generated payment for the next month';
             }
-
         } else {
             echo 'Generating payment for this month. <br>';
             $now = Carbon::now();
@@ -1089,33 +1076,32 @@ Route::get('new-payment-generation', function() {
             $taxiUp = App\Taxi::where('state', '1')->update(['state' => 0]);
             
             return 'Generated payment for this month';
-
         }
         return '25 or later';
     }
 });
 
 Route::group(['prefix' => 'other-payments', 'middleware' => ['role:super-admin|admin|officer']], function () {
-    Route::get('/', function() {
+    Route::get('/', function () {
         return view('otherPayments.index');
     });
 
-    Route::post('/redirect', function(Request $request) {
+    Route::post('/redirect', function (Request $request) {
         $type = $request->type;
         $company = $request->company;
         
         return redirect('other-payments/'.$type.'/'.$company);
     });
 
-    Route::get('invoice/{company}', function($company) {
+    Route::get('invoice/{company}', function ($company) {
         return view('otherPayments.invoice.index', compact('company'));
     });
 
-    Route::get('quotation/{company}', function($company) {
+    Route::get('quotation/{company}', function ($company) {
         return view('otherPayments.quotation.index', compact('company'));
     });
 
-    Route::get('receipt/{company}', function($company) {
+    Route::get('receipt/{company}', function ($company) {
         return view('otherPayments.receipt.index', compact('company'));
     });
 });
@@ -1126,7 +1112,7 @@ Route::get('call', 'SmsController@call');
 Route::post('/call', function () {
     // Get form input
     $userPhone = Input::get('userPhone');
-    $encodedSalesPhone = urlencode(str_replace(' ','',Input::get('salesPhone')));
+    $encodedSalesPhone = urlencode(str_replace(' ', '', Input::get('salesPhone')));
     // Set URL for outbound call - this should be your public server URL
     $host = parse_url(Request::url(), PHP_URL_HOST);
 
@@ -1187,16 +1173,15 @@ Route::get('/callcode-taken-test', function () {
 
 Route::get('/taxi-taken-test', function () {
     // Taxi Taken (Driver->exists)
-    function shownInDisplay($taxi) {
+    function shownInDisplay($taxi)
+    {
         if ($taxi->taxiNo == "-") {
             return false;
-        } 
-        elseif (!is_null($taxi->driver)) {
-            if ($taxi->driver->driverName == '-'){
+        } elseif (!is_null($taxi->driver)) {
+            if ($taxi->driver->driverName == '-') {
                 return false;
             }
-        } 
-        else {
+        } else {
             return false;
         }
     }
@@ -1226,13 +1211,14 @@ Route::get('/taxi-taken-test', function () {
 });
 
 Route::get('/full-taken-test', function () {
-    function shownInDisplay($taxi) {
+    function shownInDisplay($taxi)
+    {
         if ($taxi->taxiNo == "-") {
             return false;
         } elseif ($taxi->active == '0') {
             return false;
         } elseif (!is_null($taxi->driver)) {
-            if ($taxi->driver->driverName == '-'){
+            if ($taxi->driver->driverName == '-') {
                 return false;
             }
         } else {
@@ -1245,7 +1231,7 @@ Route::get('/full-taken-test', function () {
     echo "<br>";
     foreach ($callcodes as $callcode) {
         echo $callcode->id.",";
-        if (!is_null($callcode->taxi)) { 
+        if (!is_null($callcode->taxi)) {
             echo $callcode->taxi->id.",".$callcode->taxi->taxiNo .",". $callcode->callCode .",". $callcode->taxicenter->name .",";
             if (!is_null($callcode->taxi->driver)) {
                 echo $callcode->taxi->driver->id.",".$callcode->taxi->driver->driverName. ",";
@@ -1313,17 +1299,16 @@ Route::group(['prefix' => 'codefixes', 'middleware' => ['role:super-admin']], fu
                 $callcode->delete();
                 echo 'Successfully deleted the Call Code';
                 echo '<br>';
-            }
-            else {
+            } else {
                 echo 'Taxi(s) has been added under this call code'. $callcode->callCode;
                 echo '<br>';
             }
         }
         echo 'Fully Done';
-    }); 
+    });
 });
 
-Route::get('/assign-role/{id}/{role}', function($id, $role) {
+Route::get('/assign-role/{id}/{role}', function ($id, $role) {
     $user = User::find($id);
     // dd($role);
     $user->syncRoles($role);
@@ -1351,14 +1336,13 @@ Route::get('/pdf-filler', function () {
     dd($pdf);
 })->middleware('auth');
 
-Route::get('/post-students-to-new-site', function() {
-    
+Route::get('/post-students-to-new-site', function () {
 });
 
 Route::group(['prefix' => 'excel', 'middleware' => ['role:super-admin']], function () {
     Route::get('/taxi-owner/{center_name}', function ($cCode) {
         // Taxi
-        $taxis = \App\Taxi::where('center_name', $cCode)->where('active', '1')->where('taxiOwnerMobile', '!=', null)->where('taxiOwnerMobile', '!=', '-')->select('taxiNo', 'taxiOwnerName','taxiOwnerMobile')->get();        
+        $taxis = \App\Taxi::where('center_name', $cCode)->where('active', '1')->where('taxiOwnerMobile', '!=', null)->where('taxiOwnerMobile', '!=', '-')->select('taxiNo', 'taxiOwnerName', 'taxiOwnerMobile')->get();
         // $taxi_numbers = Helper::validate_numbers($taxis);
         
         foreach ($taxis as $taxi) {
@@ -1375,7 +1359,7 @@ Route::group(['prefix' => 'excel', 'middleware' => ['role:super-admin']], functi
         return view('exports.taxiOwner', compact('taxis'));
     });
 
-    Route::get('/drivers/{center_name}', function($cCode) {
+    Route::get('/drivers/{center_name}', function ($cCode) {
         $taxis = \App\Taxi::where('active', '1')
                         ->where('center_name', $cCode)
                         ->where('taxiNo', '!=', '-')
@@ -1386,12 +1370,10 @@ Route::group(['prefix' => 'excel', 'middleware' => ['role:super-admin']], functi
         
         foreach ($taxis as $key => $taxi) {
             if (!is_null($taxi->driver)) {
-                if ($taxi->driver->driverName == '-'){
+                if ($taxi->driver->driverName == '-') {
                     $taxis->pull($key);
                 }
-            } 
-            else 
-            {
+            } else {
                 $taxis->pull($key);
             }
         }
@@ -1400,7 +1382,7 @@ Route::group(['prefix' => 'excel', 'middleware' => ['role:super-admin']], functi
     });
 });
 
-Route::get('make-everything-green-again', function() {
+Route::get('make-everything-green-again', function () {
     $taxis = \App\Taxi::where('taxiNo', '!=', '-')
                     ->with('driver')
                     ->with('callcode')
@@ -1413,7 +1395,7 @@ Route::get('make-everything-green-again', function() {
         $taxi->insuranceExpiry = '2018-12-01';
 
         if (!is_null($taxi->driver)) {
-            if ($taxi->driver->driverName == '-'){
+            if ($taxi->driver->driverName == '-') {
                 $driver = \App\Driver::find($taxi->driver->id);
                 $driver->driverPermitExp = '2018-12-01';
                 $driver->save();
