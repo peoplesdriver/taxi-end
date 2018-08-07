@@ -111,7 +111,7 @@
                                                 <button style="display: block; margin: auto;" class="btn btn-info" data-toggle="modal" data-target="#paymentModal" onclick="c_payment('{{ $payment->id }}')">Recive Payment</button>
                                             @endif
                                             @if ($payment->paymentStatus == "1")
-                                                <a href="{{ url()->current() }}/receipt/{{ $payment->id }}" style="display: block; margin: auto;" class="btn btn-info">View</a>
+                                                <a href="/payments/taxi-payment/receipt/{{ $payment->id }}" style="display: block; margin: auto;" class="btn btn-info">View</a>
                                             @endif
                                         </td>
                                     </tr>
