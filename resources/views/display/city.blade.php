@@ -18,24 +18,23 @@
             <div class="view">
                 <div class="modal-dialog">
                     <div id="viewDriverDetails">
-                        
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-<script type="text/javascript">
-    $(document).ready(function(){
-        function loadDisplay(){
-            $('#display').load('city-ajax',function () {
-            });
-        }
-        loadDisplay();
-    });
 
-    function c_view(id){
-        $('#viewDriverDetails').load('driver-ajax/'+id,function () {});
-    };
-</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function loadDisplay() {
+                $('#display').load('city-ajax', function () {});
+            }
+            loadDisplay();
+        });
+
+        function c_view(id) {
+            $('#viewDriverDetails').load('driver-ajax/' + id, function () {});
+        };
+    </script>
 @endsection
