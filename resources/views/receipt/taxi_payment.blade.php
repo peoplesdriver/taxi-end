@@ -27,6 +27,9 @@
             bottom: -3px;
             left: 0;   
         }
+        body {
+            font-size: 200%;
+        }
     </style>
 </head>
 
@@ -37,13 +40,13 @@
         ?>
     <br>
     <div class ="container" id="printableArea">
-        <table width="100%" border="0" style="font-family:Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size:12px; ">
+        <table width="100%" border="0" style="font-family:Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size:16px;">
             <tr>
-                <td width="80%">
+                <td width="75%">
                     <?php $logo = '/logo'.$payment->taxi->callcode->taxicenter->cCode.'.jpg' ?>
                     <img src="/logo/{{ $payment->taxi->callcode->taxicenter->cCode }}.jpg" height="70"  alt=""/>
                 </td>
-                <td width="20%" colspan="2" align="left">
+                <td width="25%" colspan="2" align="left">
                     <table width="100%" border="0">
                         <tr>
                             <td><strong>Date Paid:</strong></td>
@@ -67,12 +70,12 @@
                 <td colspan="3">
                     <table width="100%" border="1" style="border-collapse:collapse">
                         <tr>
-                            <td width="21%" align="center"><strong>INFO</strong></td>
-                            <td width="7%" align="center"><strong>MONTH/YEAR</strong></td>
-                            <td width="37%" align="center"><strong>DESCRIPTION</strong></td>
-                            <td width="10%" align="center"><strong>QTY</strong></td>
-                            <td width="11%" align="center"><strong>RATE</strong></td>
-                            <td width="14%" align="center"><strong>TOTAL</strong></td>
+                            <td width="24%" align="center"><strong>INFO</strong></td>
+                            <td width="8%" align="center"><strong>MONTH/YEAR</strong></td>
+                            <td width="40%" align="center"><strong>DESCRIPTION</strong></td>
+                            <td width="9%" align="center"><strong>QTY</strong></td>
+                            <td width="9%" align="center"><strong>RATE</strong></td>
+                            <td width="10%" align="center"><strong>TOTAL</strong></td>
                         </tr>
                         <tr>
                             <td rowspan="5" class="doubleline" style="font-weight:normal" contenteditable="true">

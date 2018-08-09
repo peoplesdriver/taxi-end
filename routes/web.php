@@ -25,47 +25,13 @@ use mikehaertl\pdftk\Pdf;
 |
 */
 
-Route::get('/', function (Request $request) {
-    $flashmessage = Flashmessage::find(1);
-
-    $students = \App\DrivingS::latest()->take(5)->get();
-    $payments = \App\paymentHistory::where('paymentStatus', '1')->orderBy('updated_at', 'DESC')->take(15)->get();
-
-    $now = Carbon::now();
-
-    // $taxiPayments = \App\paymentHistory::getTotalEstPrice('7', '2018');
-    // return $taxiPayments;
-
-    if ($request->taxiNo) {
-        $taxi = Taxi::where('taxiNo', $request->taxiNo)->where('active', '1')->first();
-        if ($taxi) {
-            $quick_payments = $taxi->payment;
-        } else {
-            $quick_payments = [];
-        }
-    } else {
-        $quick_payments = [];
-    }
-    
-    // return $quick_payments;
-    // return $taxi;
-    return view('home', compact('flashmessage', 'students', 'payments', 'quick_payments'));
-})->middleware('auth');
+Route::get('/', 'HomeController@index');
 
 Route::get('/privacy-policy', function () {
     return view('privacyPolicy');
 });
 
-Route::get('/generate', function () {
-    return redirect('/test/full-taxi-gen');
-})->middleware('auth');
-
-Route::post('/flash-message', function (Request $request) {
-    $flashmessage = Flashmessage::find(1);
-    $flashmessage->message = $request->message;
-    $flashmessage->save();
-    return redirect()->back();
-})->middleware('auth');
+Route::post('/flash-message', 'HomeController@FlashMessagePost');
 
 Auth::routes();
 

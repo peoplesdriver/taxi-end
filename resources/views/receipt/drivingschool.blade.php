@@ -26,8 +26,9 @@
             bottom: -3px;
             left: 0;   
         }
-
-        
+        body {
+            font-size: 200%;
+        }
     </style>
 </head>
 
@@ -37,12 +38,12 @@
         ?>
     <br>
     <div class ="container" id="printableArea">
-        <table width="100%" border="0" style="font-family:Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size:12px; ">
+        <table width="100%" border="0" style="font-family:Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size:16px;">
             <tr>
-                <td width="80%">
+                <td width="75%">
                     <img src="/logo/dr.png" height="70"  alt=""/>
                 </td>
-                <td width="20%" colspan="2" align="left">
+                <td width="25%" colspan="2" align="left">
                     <table width="100%" border="0">
                         <tr>
                             <td><strong>Date :</strong></td>
