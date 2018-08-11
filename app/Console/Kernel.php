@@ -25,8 +25,8 @@ class Kernel extends ConsoleKernel
     {
         // Payment Generation
         // $schedule->call(function () {
-            
-        // })->monthlyOn(25, '09:00');
+        //     url('');
+        // })->monthlyOn(25, '01:00');
     }
 
     /**

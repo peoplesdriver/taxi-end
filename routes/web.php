@@ -355,6 +355,8 @@ Route::get('/display/{center_name}', function ($center_name) {
 })->middleware('auth');
 
 Route::get('/display/{center_name}/three', function ($center_name) {
+
+    // Todo: Add 2 months code
     $taxis = \App\Taxi::where('active', '1')
                     ->where('center_name', $center_name)
                     ->where('taxiNo', '!=', '-')
@@ -389,7 +391,7 @@ Route::get('/display/{center_name}/three', function ($center_name) {
                                              ->get();
                                              
             // before payment generation
-            if (count($payment_history) < 3) {
+            if (count($payment_history) < 2) {
                 return false;
             } else {
                 return true;
@@ -405,7 +407,7 @@ Route::get('/display/{center_name}/three', function ($center_name) {
                                             ->where('paymentStatus', 0)
                                             ->get();
                                             
-            if (count($payment_history) < 3) {
+            if (count($payment_history) < 2) {
                 return false;
             } else {
                 return true;
