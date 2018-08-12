@@ -391,7 +391,7 @@ Route::get('/display/{center_name}/three', function ($center_name) {
                                              ->get();
                                              
             // before payment generation
-            if (count($payment_history) < 2) {
+            if (count($payment_history) <= 2) {
                 return false;
             } else {
                 return true;
@@ -407,7 +407,7 @@ Route::get('/display/{center_name}/three', function ($center_name) {
                                             ->where('paymentStatus', 0)
                                             ->get();
                                             
-            if (count($payment_history) < 2) {
+            if (count($payment_history) <= 3) {
                 return false;
             } else {
                 return true;

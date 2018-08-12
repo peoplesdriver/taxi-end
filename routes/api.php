@@ -174,7 +174,7 @@ Route::group(['prefix' => 'v2'], function () {
                                                 ->get();
                                                 
                 // before payment generation
-                if (count($payment_history) < 3) {
+                if (count($payment_history) < 2) {
                     return $payment_history;
                 } else {
                     return $payment_history;
@@ -190,7 +190,7 @@ Route::group(['prefix' => 'v2'], function () {
                                                 ->where('paymentStatus', 0)
                                                 ->get();
                                                 
-                if (count($payment_history) < 3) {
+                if (count($payment_history) < 2) {
                     return $payment_history;
                 } else {
                     return $payment_history;
