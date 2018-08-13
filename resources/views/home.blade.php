@@ -23,7 +23,7 @@
                 </div>
                 <div class="panel-body" style="font-size: 15px;">
                     @if (Request::is('/'))
-                        your home
+                        You are Home
                     @endif
                     <p>You are logged in <strong>{{ Auth::user()->name }}</strong>!. Your Role is {{ Auth::user()->getRoleNames() }}</p>
                     <p><div id="todaysDate"></div></p>
