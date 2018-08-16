@@ -47,15 +47,15 @@
                     <table width="100%" border="0">
                         <tr>
                             <td><strong>Date :</strong></td>
-                            <td align="right">{{ $payment->updated_at->format('d/m/Y') }}</td>
+                            <td align="right" contenteditable="true">{{ $payment->updated_at->format('d/m/Y') }}</td>
                         </tr>
                         <tr>
                             <td><strong>Slip No. :</strong></td>
-                            <td align="right">TDS/{{ date("Y") }}/{{ date("m") }}/{{ $payment->id }}</td>
+                            <td align="right" contenteditable="true">TDS/{{ date("Y") }}/{{ date("m") }}/{{ $payment->id }}</td>
                         </tr>
                         <tr>
                             <td><strong>TIN No. :</strong></td>
-                            <td align="right">1047725GST501</td>
+                            <td align="right" contenteditable="true">1047725GST501</td>
                         </tr>
                     </table>
                 </td>
@@ -75,18 +75,18 @@
                             <td width="14%" align="center"><strong>TOTAL</strong></td>
                         </tr>
                         <tr>
-                            <td rowspan="5" class="doubleline" style="font-weight:normal">
+                            <td rowspan="5" class="doubleline" style="font-weight:normal" contenteditable="true">
                                 &nbsp;{{ $payment->name }}<br>
                                 &nbsp;{{ $payment->id_card }}<br>
                                 &nbsp;{{ $payment->phone  }}<br>
                                 &nbsp;{{ $payment->c_address }}<br>
                                 &nbsp;{{ $payment->p_address }}<br>
                             </td>
-                            <td align="center">&nbsp;{{ $payment->category }}</td>
-                            <td>&nbsp;Payment to {{ $payment->category }} Category Driving Course</td>
-                            <td align="center">1</td>
-                            <td align="center">{{ $payment->rate }}</td>
-                            <td align="center">{{ $payment->rate }}</td>
+                            <td align="center" contenteditable="true">&nbsp;{{ $payment->category }}</td>
+                            <td contenteditable="true">&nbsp;Payment to {{ $payment->category }} Category Driving Course</td>
+                            <td align="center" contenteditable="true">1</td>
+                            <td align="center" contenteditable="true">{{ $payment->rate }}</td>
+                            <td align="center" contenteditable="true">{{ $payment->rate }}</td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -95,7 +95,7 @@
                                 $x = strtotime($t);
                                 $n = date("M d, Y",strtotime("+3 month",$x));
                             ?>
-                            <td>&nbsp;Valid from {{ $payment->created_at->toFormattedDateString()  }} to {{ $n }}</td>
+                            <td contenteditable="true">&nbsp;Valid from {{ $payment->created_at->toFormattedDateString()  }} to {{ $n }}</td>
                             <td align="center">&nbsp;</td>
                             <td align="center">&nbsp;</td>
                             <td align="right">&nbsp;</td>
@@ -111,30 +111,30 @@
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td colspan="2"  align="center">SUBTOTAL </td>
-                            <td align="center" >{{ $payment->rate - $tax }}</td>
+                            <td align="center" contenteditable="true">{{ $payment->rate - $tax }}</td>
                         </tr>
                         <tr>
                             <td class="doubleline">&nbsp;</td>
                             <td class="doubleline">&nbsp;</td>
                             <td colspan="2" align="center">GST 6%</td>
-                            <td align="center"><?php  echo round( $payment->rate  * 6/106 ,2 );?></td>
+                            <td align="center" contenteditable="true"><?php  echo round( $payment->rate  * 6/106 ,2 );?></td>
                         </tr>
                         <tr>
                             <td colspan="2">&nbsp;</td>
-                            <td class="doubleline">&nbsp;&nbsp;&nbsp; Collected By :
+                            <td class="doubleline" contenteditable="true">&nbsp;&nbsp;&nbsp; Collected By :
                                 {{ $payment->user->name }}
                             </td>
                             <td colspan="2" align="center" class="doubleline">TOTAL (GST INCLUSIVE)</td>
-                            <td class="doubleline" align="center">{{ $payment->rate }}</td>
+                            <td class="doubleline" align="center" contenteditable="true">{{ $payment->rate }}</td>
                         </tr>
                         <tr>
-                            <td colspan="3" height="30px" style="border-left:0px">&nbsp;&nbsp;&nbsp;&nbsp; Follow Traffic Signals, Avoid Overtaking from Left and Avoid Cell Phones while Driving.</td>
+                            <td colspan="3" height="30px" style="font-size: 13px; border-left:0px" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp; Follow Traffic Signals, Avoid Overtaking from Left and Avoid Cell Phones while Driving.</td>
                             <td colspan="2" align="center" class="doubleline">Time </td>
                             <td align="center" class="doubleline" id="todaysDate">
                             </td>
                         </tr>
                         <tr>
-                            <td height="36" colspan="6" align="center" style="border-top:1px solid #000">
+                            <td height="36" colspan="6" align="center" style="font-size: 11px; border-top:1px solid #000" contenteditable="true">
                                 <strong>
                                     Address: H.Kuhlhavahmaage, Moonlight higun, Male’ | Telephone: 330 2002 , 767 2002 | Fax: 301 1919 | Email: taviyanidrivingschool@gmail.com | Website: taviyani.com.mv
                                 </strong>
