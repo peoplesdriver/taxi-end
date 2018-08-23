@@ -76,13 +76,6 @@
                             <div class="taxiNo">
                                 {{ $taxi->taxiNo }}
                             </div>
-                            <div class="phoneNumber">
-                                @if ($taxi->driver)
-                                    {{ $taxi->driver->driverMobile }}
-                                @else
-                                    No Number
-                                @endif
-                            </div>
                         </div>
                     </div>    
                 @endif  
