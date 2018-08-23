@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    font-family: 'Lato', sans-serif;
+}
+
+.title{
+    text-align: left;
+}
+.buttons{
+    text-align: right;
+}
+
+.box {
+    background-color: grey;
+    border: 0.5px solid rgb(0, 0, 0);
+    text-align: center;
+    margin: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-top-left-radius: 20px;
+}
+
+.taxiNo {
+    font-size: 105%;
+    text-shadow:1px 1px 3px rgb(83, 83, 83);
+}
+
+.phoneNumber {
+    text-shadow:1px 1px 3px rgb(83, 83, 83);
+}
+
+.callCode {
+    position:absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.circle {
+    background:rgb(255, 255, 255);
+    width:30px; height:30px; line-height: 30px;
+    text-align:center;
+    border-radius:50%;
+    box-shadow:0 0 1px #333;
+}
+
+.green {
+    background-color: #27ae60 !important;
+    color: white;
+}
+
+.red {
+    background-color: #e74c3c !important;
+    color: white;
+}
+
+.purple {
+    background-color: #9b59b6 !important;
+    color: white;
+}
+
+.green-color {
+    color: #27ae60 !important;
+}
+
+.red-color {
+    color: #e74c3c !important;
+}
+
+.purple-color {
+    color: #9b59b6 !important;
+}
+
+@media only screen and (max-width: 1450px) {
+    .taxiNo {
+        text-align: right;
+        margin-right: 15px;
+    }
+}
+
+@media only screen and (max-width: 1240px) {
+    .taxiNo {
+        text-align: right;
+        margin-right: 15px;
+    }
+}
+
+@media only screen and (max-width: 1165px) {
+    .taxiNo {
+        text-align: right;
+        margin-right: 10px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .taxiNo {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .title{
+        text-align: left;
+    }
+    .buttons{
+        text-align: right;
+    }
+}
