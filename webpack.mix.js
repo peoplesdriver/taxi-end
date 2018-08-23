@@ -16,6 +16,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .js('resources/assets/js/display.js', 'public/js')
    .sass('resources/assets/sass/display.scss', 'public/css')
+   .sass('resources/assets/sass/display-white.scss', 'public/css')
    .js('resources/assets/js/theory.js', 'public/js')
    .sass('resources/assets/sass/theory.scss', 'public/css')
    .sass('resources/assets/sass/dhivehi.scss', 'public/css');
