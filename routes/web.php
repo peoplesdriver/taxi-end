@@ -402,15 +402,15 @@ Route::get('/display/{center_name}/three/', function ($center_name) {
             // assume payment generated (probably)
             $payment_history = paymentHistory::where('taxi_id', $id)
                                             ->where('month', '>', $month_3)
-                                            ->where('month', '<', $next_month)
+                                            ->where('month', '<=', $next_month)
                                             ->where('year', '=', $next_year)
                                             ->where('paymentStatus', 0)
                                             ->get();
                                             
-            if (count($payment_history) <= 3) {
-                return false;
-            } else {
+            if (count($payment_history) > 3) {
                 return true;
+            } else {
+                return false;
             }
         }
     }

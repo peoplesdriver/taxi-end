@@ -168,16 +168,16 @@ Route::group(['prefix' => 'v2'], function () {
 
             if ($day < 25) {
                 $payment_history = paymentHistory::where('taxi_id', $id)
-                                                ->where('month', '>', $month_3)
-                                                ->where('year', '=', $year_3)
-                                                ->where('paymentStatus', 0)
-                                                ->get();
-                                                
+                                                 ->where('month', '>', $month_3)
+                                                 ->where('year', '=', $year_3)
+                                                 ->where('paymentStatus', 0)
+                                                 ->get();
+                                                 
                 // before payment generation
-                if (count($payment_history) < 2) {
+                if (count($payment_history) <= 2) {
                     return $payment_history;
                 } else {
-                    return $payment_history;
+                    return "Removed";
                 }
             }
             
@@ -185,17 +185,35 @@ Route::group(['prefix' => 'v2'], function () {
                 // assume payment generated (probably)
                 $payment_history = paymentHistory::where('taxi_id', $id)
                                                 ->where('month', '>', $month_3)
-                                                ->where('month', '<', $next_month)
+                                                ->where('month', '<=', $next_month)
                                                 ->where('year', '=', $next_year)
                                                 ->where('paymentStatus', 0)
                                                 ->get();
                                                 
-                if (count($payment_history) < 2) {
-                    return $payment_history;
+                return $payment_history;
+            }
+        });
+
+        Route::get('/just-two-unpaid', function() {
+            $taxis = Taxi::where('active', '1')
+                        ->where('taxiNo', '!=', '-')
+                        ->where('center_name', 'CBMM')
+                        ->orderBy('cc')
+                        ->with('payment')
+                        ->get();
+            foreach ($taxis as $key => $taxi) {
+                if (!is_null($taxi->driver)) {
+                    if ($taxi->driver->driverName == '-') {
+                        $taxis->pull($key);
+                    }
                 } else {
-                    return $payment_history;
+                    $taxis->pull($key);
+                }
+                if (count($taxi->payment) <= 3) {
+                    $taxis->pull($key);
                 }
             }
+            return $taxis;
         });
 
         Route::get('/taxi/three-month/{id}', function($id) {
@@ -260,5 +278,30 @@ Route::group(['prefix' => 'v2'], function () {
         Route::get('/all', function () {
             return Taxi::where('taxiNo', '!=', '-')->where('active', '1')->pluck('taxiNo');
         });
+    });
+
+    Route::get('/driver', function (Request $request) {
+        $driver = \App\Driver::with('taxi')->with('taxi.payment')->find($request->id);
+        $driver->paymentStatus = '<h4>Paid</h4>';
+        function getMonthName($monthNumber) {
+            return date("F", mktime(0, 0, 0, $monthNumber, 1));
+        }
+        $payments = $driver->taxi->payment;
+        // return $payments;
+        $tableString = "<table style='color: black;' class='table table-striped table-bordered' cellspacing='0' width='100%'><thead><tr><th>Date</th><th>Status</th></tr></thead><tbody>";
+        foreach ($payments as $payment) {
+            $tableString .= "<tr><td>";
+            $tableString .= getMonthName($payment->month) . ' ' . $payment->year;
+            $tableString .= "</td><td>";
+            if ($payment->paymentStatus == "0") {
+                $tableString .= '<button id="status" style="display: block; margin: auto;"  class="btn-danger" disabled>Not Paid</button>';
+            } elseif ($payment->paymentStatus == "1") {
+                $tableString .= '<button id="status" style="display: block; margin: auto;"  class="btn-success" disabled>Paid</button>';
+            }
+            $tableString .= "</td></tr>";
+        }                
+        $tableString .= "</tbody></table>";
+        $driver->paymentHistory = $tableString;
+        return $driver;
     });
 });          

@@ -136,7 +136,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="color: black;">
+                <div class="modal-body" style="color: black !important;">
                     <div class="row">
                         <div class="col-md-3">
                             <img id="driverPhoto" class="img-fluid img-thumbnail" src="https://profile.actionsprout.com/default.jpeg">
@@ -193,6 +193,13 @@
                             <img id="taxiBack" class="img-fluid img-thumbnail" src="http://graphics8.nytimes.com/packages/images/multimedia/bundles/projects/2013/Licenses/2008back.jpg" alt="">
                         </div>
                     </div>
+                    <hr>
+                    <div class="row" style="color: black">
+                        <div class="col-md-12">
+                            <h3>Payment History</h3>
+                            <div id="paymentHistory"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -201,7 +208,7 @@
         </div>
     </div>
 
-    <input type="hidden" name="hidden_view" id="hidden_view" value="{{ url('api/driver') }}">
+    <input type="hidden" name="hidden_view" id="hidden_view" value="{{ url('api/v2/driver') }}">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -269,6 +276,8 @@
 
                     $('#taxiFront').attr("src", taxiFront);
                     $('#taxiBack').attr("src", taxiBack);
+
+                    $('#paymentHistory').html(result.paymentHistory);
 
                     if (checkDate(result.taxi.anualFeeExpiry) == true) {
                         $('#annualFee').removeClass().addClass('green-color').text(formatDate(result.taxi.anualFeeExpiry));
