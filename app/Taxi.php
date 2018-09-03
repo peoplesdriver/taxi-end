@@ -30,4 +30,9 @@ class Taxi extends Model
     {
         return $this->hasMany('App\paymentHistory')->where('paymentStatus', '0')->orderBy('created_at', 'asc');
     }
+
+    public function payments()
+    {
+        return $this->hasMany('App\paymentHistory');
+    }
 }

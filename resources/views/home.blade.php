@@ -42,6 +42,10 @@
                         </div>
                         <button type="submit" class="btn btn-default btn-success">Save</button>
                     </form>
+
+                    <hr>
+
+                    <a href="/send-reminder/taxis">Send Reminder</a>
                     @endrole
                 </div>
             </div>

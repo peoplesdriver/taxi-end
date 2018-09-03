@@ -1458,3 +1458,37 @@ Route::get('make-everything-green-again', function () {
 
     return $taxis;
 });
+
+Route::get('/send-reminder/taxis', function(){
+    $now = Carbon::now();
+    // Current Month
+    $day = $now->format('d');
+    $month = $now->format('m');
+    $year = $now->format('Y');
+    // Last 3 Month
+    $month_3 = Carbon::now()->subMonth(3)->format('m');
+    $year_3 = Carbon::now()->subMonth(3)->format('Y');
+    // Next Month
+    $next_month = Carbon::now()->addMonth(1)->format('m');
+    $next_year = Carbon::now()->addMonth(1)->format('Y');
+
+    $taxis = Taxi::where('active', '1')
+                ->where('taxiNo', '!=', '-')
+                ->with('driver')
+                ->get();
+    foreach ($taxis as $taxi) {
+        if ($taxi->state == 0) {
+            if ($taxi->payments()->exists()) {
+                $count = 0;
+                foreach($taxi->payments as $payment) {
+                    if ($payment->paymentStatus == "0") {
+                        $count++;
+                    }
+                }
+            }
+            echo "Taxi No: $taxi->taxiNo";
+            echo "Count: $count";
+            echo "<hr>";
+        }
+    }
+});
