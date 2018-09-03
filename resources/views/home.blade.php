@@ -177,6 +177,7 @@
                                     <th>Driver Name</th>
                                     <th>Date</th>
                                     <th>Status</th>
+                                    <th>User</th>
                                     <th>Paid Date and Time</th>
                                 </tr>
                             </thead>
@@ -196,6 +197,7 @@
                                                 <button id="status" style="display: block; margin: auto;"  class="btn-success" disabled>Paid</button>
                                             @endif
                                         </td>
+                                        <td>{{ $payment->user->name }}</td>
                                         <td>
                                             {{ $payment->updated_at->format('d/m/Y h:i:s a') }}
                                         </td>
