@@ -30,8 +30,8 @@ class HomeController extends Controller
     {
         $flashmessage = Flashmessage::find(1);
 
-        $students = \App\DrivingS::latest()->take(5)->get();
-        $payments = \App\paymentHistory::where('paymentStatus', '1')->orderBy('updated_at', 'DESC')->take(15)->get();
+        $students = \App\DrivingS::latest()->take(15)->get();
+        $payments = \App\paymentHistory::where('paymentStatus', '1')->orderBy('updated_at', 'DESC')->take(200)->get();
 
         $now = Carbon::now();
 
