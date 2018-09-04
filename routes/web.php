@@ -1476,6 +1476,8 @@ Route::get('/send-reminder/taxis', function(){
                 ->where('taxiNo', '!=', '-')
                 ->with('driver')
                 ->get();
+
+    $table = "<table>";
     foreach ($taxis as $taxi) {
         if ($taxi->state == 0) {
             if ($taxi->payments()->exists()) {
@@ -1486,9 +1488,8 @@ Route::get('/send-reminder/taxis', function(){
                     }
                 }
             }
-            echo "Taxi No: $taxi->taxiNo";
-            echo "Count: $count";
-            echo "<hr>";
+            echo "<tr><td>{$taxi->driver->driverMobile}</td></tr>";
         }
     }
+    $table .= "</table>";
 });
