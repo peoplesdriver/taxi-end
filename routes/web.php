@@ -1484,11 +1484,10 @@ Route::get('/send-reminder/taxis', function(){
                 $count = 0;
                 foreach($taxi->payments as $payment) {
                     if ($payment->paymentStatus == "0") {
-                        $count++;
+                        echo "<tr><td>{$taxi->driver->driverMobile}</td><td>{$taxi->center_name}</td></tr>";
                     }
                 }
             }
-            echo "<tr><td>{$taxi->driver->driverMobile}</td></tr>";
         }
     }
     echo "</table>";
