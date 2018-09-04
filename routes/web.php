@@ -1477,7 +1477,7 @@ Route::get('/send-reminder/taxis', function(){
                 ->with('driver')
                 ->get();
 
-    $table = "<table>";
+    $table = "<table border='1'>";
     foreach ($taxis as $taxi) {
         if ($taxi->state == 0) {
             if ($taxi->payments()->exists()) {
