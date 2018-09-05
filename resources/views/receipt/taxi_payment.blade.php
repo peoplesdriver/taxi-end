@@ -86,10 +86,10 @@
                                 &nbsp;{{ $payment->taxi->driver->driverMobile }}<br>
                             </td>
                             <td align="center" contenteditable="true">&nbsp;{{ $monthName }}/{{ $payment->year }}</td>
-                            <td contenteditable="true">&nbsp;{{ $payment->desc }}</td>
+                            <td contenteditable="true">&nbsp;{{ $payment->desc }} @if ($payment->totalAmount - $payment->total !== 0) (Fine of MVR {{ $payment->totalAmount - $payment->total }}) @endif </td>
                             <td align="center" contenteditable="true">{{ $payment->qty }}</td>
-                            <td align="center" contenteditable="true">{{ $payment->total }}</td>
-                            <td align="center" contenteditable="true">{{ $payment->total }}</td>
+                            <td align="center" contenteditable="true">{{ $payment->totalAmount }}</td>
+                            <td align="center" contenteditable="true">{{ $payment->totalAmount }}</td>
                         </tr>
                         <tr>
                             <td contenteditable="true">&nbsp;</td>
@@ -109,7 +109,7 @@
                             <td contenteditable="true">&nbsp;</td>
                             <td contenteditable="true">&nbsp;</td>
                             <td colspan="2"  align="center">SUBTOTAL </td>
-                            <td align="center" contenteditable="true">{{ $payment->total }}</td>
+                            <td align="center" contenteditable="true">{{ $payment->totalAmount }}</td>
                         </tr>
                         <tr>
                             <td class="doubleline" contenteditable="true">&nbsp;</td>
@@ -123,7 +123,7 @@
                                 {{ $payment->user->name }}
                             </td>
                             <td colspan="2" align="center" class="doubleline">TOTAL</td>
-                            <td class="doubleline" align="center" contenteditable="true">{{ $payment->total }}</td>
+                            <td class="doubleline" align="center" contenteditable="true">{{ $payment->totalAmount }}</td>
                         </tr>
                         <tr>
                             <td colspan="3" height="30px" style="border-left:0px">&nbsp;&nbsp;&nbsp;&nbsp; Follow Traffic Signals, Avoid Overtaking from Left and Avoid Cell Phones while Driving.</td>
