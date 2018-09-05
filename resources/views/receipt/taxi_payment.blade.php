@@ -86,7 +86,7 @@
                                 &nbsp;{{ $payment->taxi->driver->driverMobile }}<br>
                             </td>
                             <td align="center" contenteditable="true">&nbsp;{{ $monthName }}/{{ $payment->year }}</td>
-                            <td contenteditable="true">&nbsp;{{ $payment->desc }} @if ($payment->totalAmount - $payment->total !== 0) (Fine of MVR {{ $payment->totalAmount - $payment->total }}) @endif </td>
+                            <td contenteditable="true">&nbsp;{{ $payment->desc }} @if ($payment->totalAmount - $payment->total !== 0) (Including Fine of MVR {{ $payment->totalAmount - $payment->total }}) @endif </td>
                             <td align="center" contenteditable="true">{{ $payment->qty }}</td>
                             <td align="center" contenteditable="true">{{ $payment->totalAmount }}</td>
                             <td align="center" contenteditable="true">{{ $payment->totalAmount }}</td>
