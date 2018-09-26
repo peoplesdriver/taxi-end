@@ -73,7 +73,7 @@ class PaymentHistoryController extends Controller
         $this->sendMessage($phone_number_owner, $message);
 
         if ($request->send_sms == "1") {
-            $code = $this->sendMessage($taxi->driver->driverMobile, $message);
+            $code = $this->sendMessage('960'.$taxi->driver->driverMobile, $message);
 
             if ($code == '200') {
                 return back()->with('alert-success', 'Payment Recived Successfully - Message Success');
