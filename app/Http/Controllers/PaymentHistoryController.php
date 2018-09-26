@@ -10,15 +10,15 @@ use App\CallCode;
 use App\TaxiCenter;
 use Illuminate\Support\Facades\Auth;
 
-use Twilio\Rest\Client;
+// use Twilio\Rest\Client;
 
 class PaymentHistoryController extends Controller
 {
-    public function __construct(Client $client)
-    {
-        $this->middleware('auth');
-        $this->client = $client;
-    }
+    // public function __construct(Client $client)
+    // {
+    //     $this->middleware('auth');
+    //     $this->client = $client;
+    // }
 
     public function index()
     {
@@ -67,13 +67,13 @@ class PaymentHistoryController extends Controller
         }
 
         //Send SMS
-        $phone_number_owner = '+9607774713';
+        $phone_number_owner = '9607774713';
         $message = $request->smsText;
 
         $this->sendMessage($phone_number_owner, $message);
 
         if ($request->send_sms == "1") {
-            $phoneNumber = '+960'.$request->driverNumber;
+            $phoneNumber = '960'.$request->driverNumber;
             $this->sendMessage($phoneNumber, $message);
         }
 
@@ -81,17 +81,37 @@ class PaymentHistoryController extends Controller
 
     }
 
+    // private function sendMessageTwilio($phoneNumber, $message)
+    // {
+    //     $twilioPhoneNumber = config('services.twilio')['phoneNumber'];
+    //     $messageParams = array(
+    //         'from' => 'Taviyani',
+    //         'body' => $message
+    //     );
+
+    //     $this->client->messages->create(
+    //         $phoneNumber,
+    //         $messageParams
+    //     );
+    // }
+
     private function sendMessage($phoneNumber, $message)
     {
-        $twilioPhoneNumber = config('services.twilio')['phoneNumber'];
-        $messageParams = array(
-            'from' => 'Taviyani',
-            'body' => $message
-        );
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"http://www.example.com/tester.phtml");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
+            array([
+                'body' => $message,
+                'sender_id' => 'Taviyani',
+                'recipients' => $phoneNumber
+            ])
+        ));
 
-        $this->client->messages->create(
-            $phoneNumber,
-            $messageParams
-        );
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($ch);
+        curl_close ($ch);
+
+        return $server_output;
     }
 }
