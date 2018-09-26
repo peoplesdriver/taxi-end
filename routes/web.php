@@ -562,6 +562,52 @@ Route::group(['prefix' => 'sms', 'middleware' => ['role:super-admin|admin|office
     Route::post('/group', 'GroupSmsController@store');
 
     Route::get('/group/status/{id}', 'GroupSmsController@status');
+
+    Route::get('/balance', function(){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://rest.msgowl.com/balance");
+        $header = array(
+            'Authorization: AccessKey 82df3162fa9d0d9b0721163'
+        );
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+        $server_output = curl_exec($ch);
+        curl_close ($ch);
+
+        return $server_output;
+    });
+
+    Route::get('test-message/{phoneNumber}/{sender_id}/{message}', function($phoneNumber, $sender_id, $message) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://rest.msgowl.com/messages");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "body={$message}&sender_id={$sender_id}&recipients={$phoneNumber}");
+        $header = array(
+            'Authorization: AccessKey 82df3162fa9d0d9b0721163'
+        );
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close ($ch);
+
+        if ($code == '200') {
+            return 'Success - Message has been sent successfully.';
+        }
+        if ($code == '422') {
+            return 'Required fields are missing.';
+        }
+        if ($code == '400') {
+            return 'Bad Request - Invalid sender_id.';
+        }
+        if ($code == '401') {
+            return 'Unauthorized - Invalid authorization key.';
+        }
+        if ($code == '403') {
+            return 'Forbidden - Authorization header is missing.';
+        }
+    });
 });
 
 /*

@@ -26,6 +26,14 @@
                         </div>
                     </div>
                     <div class="col-md-12">
+                        <center>
+                            <h5>Account Balance: MVR {{ $balance->balance }}</h5>
+                            <?php $messagesLeft = $balance->balance / '0.155'; ?>
+                            <h6>Estimate messages left: {{ round($messagesLeft, 0) }}</h6>
+                        </center>
+                        <hr>
+                    </div>
+                    <div class="col-md-12">
                         <form class="form-horizontal" method="POST">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <fieldset>
@@ -44,6 +52,9 @@
                                             <option value="TDS">TDS</option>
                                             <option value="JR Taxi">JR Taxi</option>
                                             <option value="City Cab">City Cab</option>
+                                            <option disabled="disabled">---------------------------------------</option>
+                                            <option value="MyRide">MyRide</option>
+                                            <option value="My Ride">My Ride</option>
                                         </select>
                                     </div>
                                 </div>

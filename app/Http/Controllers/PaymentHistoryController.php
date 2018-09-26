@@ -73,11 +73,27 @@ class PaymentHistoryController extends Controller
         $this->sendMessage($phone_number_owner, $message);
 
         if ($request->send_sms == "1") {
-            $phoneNumber = '960'.$request->driverNumber;
-            $this->sendMessage($phoneNumber, $message);
-        }
+            $code = $this->sendMessage($taxi->driver->driverMobile, $message);
 
-        return back()->with('success','Payment Recived Successfully.');
+            if ($code == '200') {
+                return back()->with('alert-success', 'Payment Recived Successfully - Message Success');
+            }
+            if ($code == '422') {
+                return back()->with('alert-danger', 'Payment Recived Successfully - Message failed - Required fields are missing.');
+            }
+            if ($code == '400') {
+                return back()->with('alert-danger', 'Payment Recived Successfully - Message failed - Bad Request - Invalid sender_id.');
+            }
+            if ($code == '401') {
+                return back()->with('alert-danger', 'Payment Recived Successfully - Message failed - Unauthorized - Invalid authorization key.');
+            }
+            if ($code == '403') {
+                return back()->with('alert-danger', 'Payment Recived Successfully - Message failed - Forbidden - Authorization header is missing.');
+            }
+        } else {
+            return back()->with('success','Payment Recived Successfully.');
+        }            
+        // return back()->with('success','Payment Recived Successfully.');
 
     }
 
@@ -100,26 +116,15 @@ class PaymentHistoryController extends Controller
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,"https://rest.msgowl.com/messages");
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(
-            array([
-                'body' => $message,
-                'sender_id' => 'Taviyani',
-                'recipients' => $phoneNumber
-            ])
-        ));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "body={$message}&sender_id=Taviyani&recipients={$phoneNumber}");
         $header = array(
             'Authorization: AccessKey 82df3162fa9d0d9b0721163'
         );
-
-        // ----------------------------------------------------------------
-        // pass header variable in curl method
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-        
-
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $server_output = curl_exec($ch);
+        $result = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close ($ch);
-
-        return $server_output;
+        return $code;
     }
 }
