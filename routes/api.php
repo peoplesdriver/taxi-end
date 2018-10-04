@@ -248,7 +248,7 @@ Route::group(['prefix' => 'v2'], function () {
         });
 
         Route::get('/driver/{id}', function($id) {
-            return Driver::where('id', $id)->with('taxi')->first();
+            return Driver::where('active', '1')->where('id', $id)->with('taxi')->first();
         });
     });
 
@@ -303,6 +303,22 @@ Route::group(['prefix' => 'v2'], function () {
         $tableString .= "</tbody></table>";
         $driver->paymentHistory = $tableString;
         return $driver;
+    });
+
+    Route::get('fix-color/{id}', function($id) {
+        // Check if all payments are made OR make the taxi state 0 
+        $checkP = paymentHistory::where('taxi_id', $id)->where('paymentStatus', '0')->get();
+        if ($checkP->count() >= 1) {
+            $taxi = Taxi::find($id);
+            $taxi->state = '0';
+            $taxi->save();    
+        } else {
+            $taxi = Taxi::find($id);
+            $taxi->state = '1';
+            $taxi->save(); 
+        }
+
+        return "Color Updated";
     });
 });          
 

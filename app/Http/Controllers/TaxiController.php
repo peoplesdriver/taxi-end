@@ -8,6 +8,7 @@ use App\CallCode;
 use App\Taxi;
 use App\Driver;
 use App\Helpers\Helper;
+use App\paymentHistory;
 use Illuminate\Support\Facades\Input;
 
 use Kris\LaravelFormBuilder\FormBuilder;
@@ -143,6 +144,17 @@ class TaxiController extends Controller
         $new_callcode = CallCode::find($new_callcode_id);
         $taxi->cc = $new_callcode->callCode;
         $taxi->save();
+
+        $checkP = paymentHistory::where('taxi_id', $id)->where('paymentStatus', '0')->get();
+        if ($checkP->count() >= 1) {
+            $taxi = Taxi::find($id);
+            $taxi->state = '0';
+            $taxi->save();    
+        } else {
+            $taxi = Taxi::find($id);
+            $taxi->state = '1';
+            $taxi->save(); 
+        }
         
         return redirect('configure/taxi')->with('alert-success','Taxi Updated successfully.');
     }

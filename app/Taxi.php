@@ -18,7 +18,7 @@ class Taxi extends Model
 
     public function driver()
     {
-        return $this->hasOne('App\Driver');
+        return $this->hasOne('App\Driver')->where('active', '1');
     }
     
     public function payment()

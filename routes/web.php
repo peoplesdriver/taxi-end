@@ -332,9 +332,9 @@ Route::get('/display/{center_name}', function ($center_name) {
     $taxis = \App\Taxi::where('active', '1')
                     ->where('center_name', $center_name)
                     ->where('taxiNo', '!=', '-')
-                    ->with('driver')
                     ->with('callcode')
                     ->orderBy('cc')
+                    ->with('driver')
                     ->get();
     $center = \App\TaxiCenter::find($taxis[0]->callcode->center_id);
     $title = $center->name;
@@ -360,10 +360,11 @@ Route::get('/display/{center_name}/three/', function ($center_name) {
     $taxis = \App\Taxi::where('active', '1')
                     ->where('center_name', $center_name)
                     ->where('taxiNo', '!=', '-')
-                    ->with('driver')
                     ->with('callcode')
                     ->orderBy('cc')
-                    ->get();
+                    ->whereHas('drivier', function($query) {
+                        $query->where('active', '1');
+                    })->get();
     $center = \App\TaxiCenter::find($taxis[0]->callcode->center_id);
     $title = $center->name;
 
