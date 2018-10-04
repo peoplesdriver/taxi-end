@@ -362,9 +362,8 @@ Route::get('/display/{center_name}/three/', function ($center_name) {
                     ->where('taxiNo', '!=', '-')
                     ->with('callcode')
                     ->orderBy('cc')
-                    ->whereHas('drivier', function($query) {
-                        $query->where('active', '1');
-                    })->get();
+                    ->with('driver')
+                    ->get();
     $center = \App\TaxiCenter::find($taxis[0]->callcode->center_id);
     $title = $center->name;
 

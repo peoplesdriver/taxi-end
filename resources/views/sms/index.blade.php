@@ -91,6 +91,10 @@
                                         <button type="reset" class="btn btn-danger">Reset</button>
                                     </div>
                                 </div>
+                                <hr>
+                                <div class="form-group">
+                                    
+                                </div>
                             </fieldset>
                         </form>
                     </div>
