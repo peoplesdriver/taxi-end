@@ -47,6 +47,8 @@ class TaxiController extends Controller
     public function store(Request $request)
     {
         $taxi = Taxi::create(Input::except('_token', 'taxi_front_url', 'taxi_back_url'));
+        $taxi->state = '1';
+        $taxi->save();
         
         $taxiCenter = Taxi::find($taxi->id);
         $taxiCenter->center_name = $taxi->callcode->taxicenter->cCode;
