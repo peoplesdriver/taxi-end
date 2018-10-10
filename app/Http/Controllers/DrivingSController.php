@@ -6,15 +6,10 @@ use App\DrivingS;
 use App\Instructors;
 use Illuminate\Http\Request;
 
-use Twilio\Rest\Client;
+// use Twilio\Rest\Client;
 
 class DrivingSController extends Controller
 {
-    public function __construct(Client $client)
-    {
-        $this->middleware('auth');
-        $this->client = $client;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +40,6 @@ class DrivingSController extends Controller
      */
     public function store(Request $request)
     {
-
         $student = DrivingS::create([
             'name' => request('name'),
             'id_card' => request('id_card'),
@@ -67,21 +61,26 @@ class DrivingSController extends Controller
         
         $message = "Welcome ". $student->name .", to Taviyani Driving School. You will be receving further updatest through sms";
         $phoneNumbers = $student->phone;
-        $from = "TDS";
+        $phoneNumber = '960'.$phoneNumbers;
 
-        //dd($from);
+        $code = $this->sendMessage($phoneNumber, $message);
 
-        $phoneNumber = '+960'.$phoneNumbers;
-
-        try {
-            $this->sendMessage($phoneNumber, $message, $from);
+        if ($code == '200') {
             return redirect('driving-school')->with('alert-success', 'Successfully Registered a new Student');
-
-        } catch ( \Twilio\Exceptions\RestException  $e ) {
-            return redirect('driving-school')->with('alert-danger', 'Driver added but '.$e->getMessage());
+        }
+        if ($code == '422') {
+            return redirect('driving-school')->with('alert-danger', 'Student added but - Message failed - Required fields are missing.');
+        }
+        if ($code == '400') {
+            return redirect('driving-school')->with('alert-danger', 'Student added but - Message failed - Bad Request - Invalid sender_id.');
+        }
+        if ($code == '401') {
+            return redirect('driving-school')->with('alert-danger', 'Student added but - Message failed - Unauthorized - Invalid authorization key.');
+        }
+        if ($code == '403') {
+            return redirect('driving-school')->with('alert-danger', 'Student added but - Message failed - Forbidden - Authorization header is missing.');
         }
 
-        
     }
 
     /**
@@ -143,17 +142,22 @@ class DrivingSController extends Controller
         return redirect('/driving-school')->with('alert-success','Successfully deleted the Student');
     }
 
-    private function sendMessage($phoneNumber, $message, $from)
+    private function sendMessage($phoneNumber, $message)
     {
-        $twilioPhoneNumber = config('services.twilio')['phoneNumber'];
-        $messageParams = array(
-            'from' => $from,
-            'body' => $message
-        );
+        $from = "TDS";
 
-        $this->client->messages->create(
-            $phoneNumber,
-            $messageParams
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://rest.msgowl.com/messages");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "body={$message}&sender_id={$from}&recipients={$phoneNumber}");
+        $header = array(
+            'Authorization: AccessKey 82df3162fa9d0d9b0721163'
         );
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close ($ch);
+        return $code;
     }
 }

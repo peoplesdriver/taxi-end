@@ -91,12 +91,17 @@
                                         <button type="reset" class="btn btn-danger">Reset</button>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="form-group">
-                                    
-                                </div>
                             </fieldset>
                         </form>
+                        <hr>
+                        <div class="row">
+                            <label class="col-md-4" for=""></label>
+                            <div class="col-md-8">
+                                <button class="btn btn-secondary" onclick="autofillMessage('Your theory test is {{ date('d/m/Y') }} @ 11:00 am. Please collect your slip from the office before going. For more information call 7672002')">Theory</button>
+                                <button class="btn btn-secondary" onclick="autofillMessage('Your driving test is on {{ date('d F Y') }} / 4:00pm @ Wamco Area. For more info call 7672002 or your instructor - Taviyani Driving School')">Driving</button>
+                                <button class="btn btn-secondary" onclick="autofillMessage('Your license card is ready, Complete any pending payments and collect the License from the office. For more information call 7672002 - Taviyani Driving School')">License</button>
+                            </div>
+                        </div>
                     </div>
                 </div>    
             </div>        
@@ -110,5 +115,10 @@
     <script src="/js/sms_counter.min.js"></script>
     <script>
         $('#message').countSms('#sms-counter')
+
+        function autofillMessage(message) {
+            $('#message').text('');
+            $('#message').text(message);
+        }
     </script>
 @endsection

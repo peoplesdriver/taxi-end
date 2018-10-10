@@ -7,6 +7,7 @@ use App\CallCode;
 use App\Taxi;
 use App\FlashMessage;
 use Carbon\Carbon;
+use App\DrivingS;
 use App\User;
 use Illuminate\Support\Facades\Crypt;
 use App\Exports\CallcodeExport;
@@ -1537,4 +1538,16 @@ Route::get('/send-reminder/taxis', function(){
         }
     }
     echo "</table>";
+});
+
+Route::get('/driving/sales/{month}', function($month) {
+    $students = DrivingS::whereMonth('created_at', '=', $month)->get();
+    $rates = $students->pluck('rate')->toArray();
+
+    foreach ($students as $student) {
+        echo $student->category;
+        echo "<br>";
+        // echo $student->rate;
+        // echo "<br>";
+    }
 });
