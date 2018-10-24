@@ -27,7 +27,7 @@ class SmsController extends Controller
         $phoneNumbers = $request->input('phoneNumber');
         
         $from = $request->input('senderId');
-        $phoneNumber = '960'.$phoneNumbers;
+        $phoneNumber = '60'.$phoneNumbers;
 
         // try {
         //     $this->sendMessage($phoneNumber, $message, $from);
