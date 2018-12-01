@@ -172,32 +172,34 @@
                             <div></div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>License Card</h5>
-                            <img id="licenceFront" class="img-fluid img-thumbnail" src="http://graphics8.nytimes.com/packages/images/multimedia/bundles/projects/2013/Licenses/2008back.jpg" alt="">
+                    <div style="color: black;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>License Card</h5>
+                                <img id="licenceFront" class="img-fluid img-thumbnail" src="http://graphics8.nytimes.com/packages/images/multimedia/bundles/projects/2013/Licenses/2008back.jpg" alt="">
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Taxi Permit</h5>
+                                <img id="licenceBack" class="img-fluid img-thumbnail" src="http://graphics8.nytimes.com/packages/images/multimedia/bundles/projects/2013/Licenses/2008back.jpg" alt="">
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <h5>Taxi Permit</h5>
-                            <img id="licenceBack" class="img-fluid img-thumbnail" src="http://graphics8.nytimes.com/packages/images/multimedia/bundles/projects/2013/Licenses/2008back.jpg" alt="">
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Taxi Front</h5>
+                                <img id="taxiFront" class="img-fluid img-thumbnail" src="http://graphics8.nytimes.com/packages/images/multimedia/bundles/projects/2013/Licenses/2008back.jpg" alt="">
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Taxi Back</h5>
+                                <img id="taxiBack" class="img-fluid img-thumbnail" src="http://graphics8.nytimes.com/packages/images/multimedia/bundles/projects/2013/Licenses/2008back.jpg" alt="">
+                            </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Taxi Front</h5>
-                            <img id="taxiFront" class="img-fluid img-thumbnail" src="http://graphics8.nytimes.com/packages/images/multimedia/bundles/projects/2013/Licenses/2008back.jpg" alt="">
-                        </div>
-                        <div class="col-md-6">
-                            <h5>Taxi Back</h5>
-                            <img id="taxiBack" class="img-fluid img-thumbnail" src="http://graphics8.nytimes.com/packages/images/multimedia/bundles/projects/2013/Licenses/2008back.jpg" alt="">
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row" style="color: black">
-                        <div class="col-md-12">
-                            <h3>Payment History</h3>
-                            <div id="paymentHistory"></div>
+                        <hr>
+                        <div class="row" style="color: black">
+                            <div class="col-md-12">
+                                <h3>Payment History</h3>
+                                <div id="paymentHistory"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
