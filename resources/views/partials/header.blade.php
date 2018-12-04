@@ -64,11 +64,11 @@
                     Driving School <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ url('driving-school') }}">All Driving School Students</a></li>
-                    <li><a href="{{ url('driving-school/create') }}">Register a new user to the Driving School</a></li>
+                    <li><a href="//driving.taviyani.xyz">New Site</a></li>
                     @role('super-admin|admin')
                     <hr>
-                    <li><a href="//driving.taviyani.xyz">New Site</a></li>
+                    <li><a href="{{ url('driving-school') }}">All Driving School Students</a></li>
+                    <li><a href="{{ url('driving-school/create') }}">Register a new user to the Driving School</a></li>
                     @endrole
                 </ul>
             </li>
